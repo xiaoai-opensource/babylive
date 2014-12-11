@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <EditText
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="标题" />
+
+        <TextView
+            android:id="@+id/dateLabel"
+            android:layout_height="40dp"
+            android:layout_width="100dp"
+            android:paddingLeft="10dp"
+            android:textSize="7pt"
+            android:gravity="center_vertical"
+            android:layout_below="@id/title"
+            android:text="发生时间" />
+
+        <TextView
+            android:id="@+id/date"
+            style="@style/label_common"
+            android:layout_below="@id/title"
+            android:layout_toRightOf="@id/dateLabel" />
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_below="@id/dateLabel"
+        android:layout_marginLeft="1dip"
+        android:layout_marginRight="1dip"
+        android:layout_weight="1"
+        android:background="@drawable/mutiline_edittext"
+        android:gravity="top"
+        android:lines="18"
+        android:padding="4dip" />
+
+    <RelativeLayout
+        android:id="@+id/titleBar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/actionBar_height" >
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/list_view_item"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="horizontal" >
+
+    <RelativeLayout
+        android:id="@+id/rlContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/actionTime"
+            style="@style/list_view_item_head"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+        <TextView
+            android:id="@+id/title"
+            style="@style/list_view_item_body"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_height"
+            android:layout_below="@id/actionTime"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/del"
+        android:layout_width="@dimen/item_del_width"
+        android:layout_height="match_parent"
+        android:background="@color/right_bg" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@drawable/del_icon_normal"
+            android:gravity="center" />
+    </RelativeLayout>
+
+</LinearLayout>
