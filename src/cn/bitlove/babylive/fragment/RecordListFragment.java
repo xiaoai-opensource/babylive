@@ -1,39 +1,43 @@
 package cn.bitlove.babylive.fragment;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import cn.bitlove.babylive.R;
 import cn.bitlove.babylive.activity.NewRecordActivity;
 import cn.bitlove.babylive.data.RecordData;
 import cn.bitlove.babylive.entity.Record;
 import cn.bitlove.babylive.util.ManageActivity;
-import cn.bitlove.remind.ToastReminder;
+import cn.bitlove.babylive.widget.WaterfallListView;
+import cn.bitlove.babylive.widget.WaterfallListView.IOnRefresh;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.ListView;
+import android.widget.ListAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class RecordListFragment extends Fragment{
-	Context mContext;
-	Activity mActivity;
-	View fragmentView;
+	private Context mContext;
+	private Activity mActivity;
+	private View fragmentView;
 	protected ManageActivity ma;
-	private ListView recordList;
+	private WaterfallListView recordList;
 	private LayoutInflater mInflater;
 	private RecordData mRD;
-	private int delWidth;
+	private BaseAdapter mAdapter;
+	private ArrayList<Record> arrRecord;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -56,20 +60,21 @@ public class RecordListFragment extends Fragment{
 	
 	private void init(){
 		mRD = RecordData.getInstance(mContext);
-		recordList = (ListView) fragmentView.findViewById(R.id.recordList);
-		delWidth = mContext.getResources().getDimensionPixelOffset(R.dimen.item_del_width);
+		recordList = (WaterfallListView) fragmentView.findViewById(R.id.recordList);
+		recordList.setRefreshListener(refresher);
 	}
 	/**
 	 * 初始化列表数据
 	 * */
 	private void initListData(){
-		final ArrayList<Record> arrRecord = mRD.queryAllRecords();
-		recordList.setAdapter(new BaseAdapter() {
-
+		arrRecord = mRD.queryAllRecords();
+		
+		mAdapter = new BaseAdapter() {
+			
 			@Override
 			public View getView(int position, View convertView, ViewGroup parent) {
 				ViewHolder vh = null;
-				final Record record = arrRecord.get(position);
+				final Record record = (Record) arrRecord.get(position);
 				if(convertView==null){
 					vh = new ViewHolder();
 					convertView = mInflater.inflate(R.layout.item_record, null);
@@ -78,17 +83,6 @@ public class RecordListFragment extends Fragment{
 					vh.title = (TextView)convertView.findViewById(R.id.title);
 					vh.del = (RelativeLayout)convertView.findViewById(R.id.del);
 
-					vh.del.setOnClickListener(new OnClickListener() {
-
-						@Override
-						public void onClick(View v) {
-							int rowNum = mRD.deleteRecord(record.getId());
-							if(rowNum>-1){
-								ToastReminder.showToast(mContext, "成功删除记录", Toast.LENGTH_SHORT);
-								initListData();
-							}
-						}
-					});
 					convertView.setTag(vh);
 				}else{
 					vh = (ViewHolder) convertView.getTag();
@@ -97,24 +91,26 @@ public class RecordListFragment extends Fragment{
 				vh.title.setText(record.getTitle());
 				return convertView;
 			}
-
+			
 			@Override
 			public long getItemId(int position) {
-				Record record = arrRecord.get(position);
+				Record record = (Record) arrRecord.get(position);
 				return record.getId();
 			}
-
+			
 			@Override
 			public Object getItem(int position) {
-				Record record = arrRecord.get(position);
+				Record record = (Record) arrRecord.get(position);
 				return record;
 			}
-
+			
 			@Override
 			public int getCount() {
 				return arrRecord.size();
 			}
-		});
+		};
+		
+		recordList.setAdapter(mAdapter);
 
 		/**
 		 * 条目点击事件
@@ -134,6 +130,31 @@ public class RecordListFragment extends Fragment{
 		});
 
 	}
+	IOnRefresh refresher = new IOnRefresh() {
+		
+		@Override
+		public void doRefresh() {
+			new Handler().postDelayed(new Runnable() {
+				@Override
+				public void run() {
+					
+					Record rd = new Record();
+					rd.setTitle("...........this is a added item");
+					arrRecord.add(rd);
+					mAdapter.notifyDataSetChanged();
+					
+					//执行刷新完成操作，清理刷新状态
+					recordList.completeRefresh();
+				}
+			},2000);
+			
+		}
+		
+		@Override
+		public void beforeRefresh() {
+			
+		}
+	};
 	static final class ViewHolder{
 		RelativeLayout rlContent;
 		TextView actionTime;
@@ -141,4 +162,5 @@ public class RecordListFragment extends Fragment{
 		RelativeLayout del;
 		int delScrollX;
 	}
+	
 }
