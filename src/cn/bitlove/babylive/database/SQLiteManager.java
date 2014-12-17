@@ -164,6 +164,23 @@ public class SQLiteManager {
 		return cursor;
 	}
 	/**
+	 * 从指定位置读取指定条数的记录
+	 * @param begin 记录起始位置
+	 * @param limit 要读取的条数
+	 * @return Cursor
+	 * */
+	public Cursor queryNextNumRecords(int begin,int limit){
+		Cursor  cursor =null;
+		try{
+			db = getSqLiteDatabase(false);
+			String sql = String.format("select * from record limit %d offset %d", limit,begin);
+			cursor = db.rawQuery(sql,null);
+		}catch(Exception ex){
+
+		}
+		return cursor;
+	}
+	/**
 	 * 插入一条资源图片
 	 * */
 	public long insertMetaImg(RecordMeta rm,Record record){

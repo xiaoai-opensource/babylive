@@ -37,6 +37,7 @@ public class RecordListFragment extends Fragment{
 	private RecordData mRD;
 	private BaseAdapter mAdapter;
 	private ArrayList<Record> arrRecord;
+	final private int PAGE_NUM=10;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,7 +68,7 @@ public class RecordListFragment extends Fragment{
 	 * 初始化列表数据
 	 * */
 	private void initListData(){
-		arrRecord = mRD.queryAllRecords();
+		arrRecord = mRD.queryNextNumRecords(0, PAGE_NUM);
 		
 		mAdapter = new BaseAdapter() {
 			
@@ -138,15 +139,15 @@ public class RecordListFragment extends Fragment{
 				@Override
 				public void run() {
 					
-					Record rd = new Record();
-					rd.setTitle("...........this is a added item");
-					arrRecord.add(rd);
+					ArrayList<Record> nextRecords = mRD.queryNextNumRecords(arrRecord.size(), PAGE_NUM);
+					for(Record record : nextRecords){
+						arrRecord.add(record);
+					}
 					mAdapter.notifyDataSetChanged();
-					
 					//执行刷新完成操作，清理刷新状态
 					recordList.completeRefresh();
 				}
-			},2000);
+			},1000);
 			
 		}
 		
