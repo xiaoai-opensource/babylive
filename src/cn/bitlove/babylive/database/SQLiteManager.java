@@ -173,7 +173,7 @@ public class SQLiteManager {
 		Cursor  cursor =null;
 		try{
 			db = getSqLiteDatabase(false);
-			String sql = String.format("select * from record limit %d offset %d", limit,begin);
+			String sql = String.format("select * from record order by actionDate desc limit %d offset %d", limit,begin);
 			cursor = db.rawQuery(sql,null);
 		}catch(Exception ex){
 

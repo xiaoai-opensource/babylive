@@ -10,6 +10,7 @@ import cn.bitlove.babylive.entity.Record;
 import cn.bitlove.babylive.util.ManageActivity;
 import cn.bitlove.babylive.widget.WaterfallListView;
 import cn.bitlove.babylive.widget.WaterfallListView.IOnRefresh;
+import cn.bitlove.remind.ToastReminder;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -26,6 +27,7 @@ import android.widget.ListAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Toast;
 
 public class RecordListFragment extends Fragment{
 	private Context mContext;
@@ -38,7 +40,7 @@ public class RecordListFragment extends Fragment{
 	private BaseAdapter mAdapter;
 	private ArrayList<Record> arrRecord;
 	final private int PAGE_NUM=10;
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -48,7 +50,7 @@ public class RecordListFragment extends Fragment{
 		ma=ManageActivity.getInstance(mContext);
 		mInflater = inflater;
 		init();
-		
+
 		initListData();
 		return fragmentView;
 	}
@@ -57,8 +59,8 @@ public class RecordListFragment extends Fragment{
 		super.onResume();
 		initListData();
 	}
-	
-	
+
+
 	private void init(){
 		mRD = RecordData.getInstance(mContext);
 		recordList = (WaterfallListView) fragmentView.findViewById(R.id.recordList);
@@ -69,9 +71,9 @@ public class RecordListFragment extends Fragment{
 	 * */
 	private void initListData(){
 		arrRecord = mRD.queryNextNumRecords(0, PAGE_NUM);
-		
+
 		mAdapter = new BaseAdapter() {
-			
+
 			@Override
 			public View getView(int position, View convertView, ViewGroup parent) {
 				ViewHolder vh = null;
@@ -92,25 +94,25 @@ public class RecordListFragment extends Fragment{
 				vh.title.setText(record.getTitle());
 				return convertView;
 			}
-			
+
 			@Override
 			public long getItemId(int position) {
 				Record record = (Record) arrRecord.get(position);
 				return record.getId();
 			}
-			
+
 			@Override
 			public Object getItem(int position) {
 				Record record = (Record) arrRecord.get(position);
 				return record;
 			}
-			
+
 			@Override
 			public int getCount() {
 				return arrRecord.size();
 			}
 		};
-		
+
 		recordList.setAdapter(mAdapter);
 
 		/**
@@ -120,7 +122,7 @@ public class RecordListFragment extends Fragment{
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				
+
 				Record record = (Record) recordList.getItemAtPosition(recordList.getFirstVisiblePosition()+position);
 				Intent intent = new Intent(mContext,NewRecordActivity.class);
 				Bundle bundle = new Bundle();
@@ -132,28 +134,32 @@ public class RecordListFragment extends Fragment{
 
 	}
 	IOnRefresh refresher = new IOnRefresh() {
-		
+
 		@Override
 		public void doRefresh() {
 			new Handler().postDelayed(new Runnable() {
 				@Override
 				public void run() {
-					
+
 					ArrayList<Record> nextRecords = mRD.queryNextNumRecords(arrRecord.size(), PAGE_NUM);
-					for(Record record : nextRecords){
-						arrRecord.add(record);
+					if(nextRecords.size()==0){
+						ToastReminder.showToast(mContext, "没有更多数据了", Toast.LENGTH_SHORT);
+					}else{
+						for(Record record : nextRecords){
+							arrRecord.add(record);
+						}
+						mAdapter.notifyDataSetChanged();
+						//执行刷新完成操作，清理刷新状态
 					}
-					mAdapter.notifyDataSetChanged();
-					//执行刷新完成操作，清理刷新状态
 					recordList.completeRefresh();
 				}
 			},1000);
-			
+
 		}
-		
+
 		@Override
 		public void beforeRefresh() {
-			
+
 		}
 	};
 	static final class ViewHolder{
@@ -163,5 +169,5 @@ public class RecordListFragment extends Fragment{
 		RelativeLayout del;
 		int delScrollX;
 	}
-	
+
 }
