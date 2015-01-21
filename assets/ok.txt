@@ -1,0 +1,29 @@
+public long saveRecord(Record record){
+		long rowId=-1;
+		if(dbHelper==null){
+			dbHelper = new SQLiteDBHelper(mContext, DBNAME, null, 1);
+		}
+		try{
+			ContentValues cv = new ContentValues();
+			cv.put("userName", record.getUserName());
+			cv.put("actionDate",record.getActionDate());
+			cv.put("createDate", record.getCreateDate());
+			cv.put("content",record.getContent());
+
+			db = dbHelper.getWritableDatabase();
+			db.beginTransaction();
+			rowId = db.insert(TABLE_RECORD, null, cv);
+
+			db.setTransactionSuccessful();
+		}catch(Exception ex){
+			db.endTransaction();
+		}finally{
+			db.endTransaction();
+			if(db!=null){
+				db.close();
+				db = null;
+			}
+
+		}
+		return rowId;
+	}

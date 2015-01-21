@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <TableLayout
+        android:layout_marginTop="20dip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TableRow style="@style/list_item" >
+
+            <TextView
+                style="@style/list_label_common"
+                android:text="姓名" />
+
+            <EditText
+                android:id="@+id/name"
+                style="@style/profile_right_edittext"
+                android:layout_weight="1" />
+        </TableRow>
+
+        <TableRow style="@style/list_item" >
+
+            <TextView
+                style="@style/list_label_common"
+                android:layout_gravity="center_horizontal"
+                android:text="性别" />
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal" >
+
+                <RadioButton
+                    android:id="@+id/sex"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="男" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="女" />
+            </RadioGroup>
+        </TableRow>
+
+        <TableRow style="@style/list_item" >
+
+            <TextView
+                style="@style/list_label_common"
+                android:text="出生日期" />
+
+            <EditText
+                android:editable="false"
+                android:id="@+id/birthday"
+                style="@style/profile_right_edittext"
+                android:layout_weight="1" />
+        </TableRow>
+         <TableRow style="@style/list_item" >
+
+            <TextView
+                style="@style/list_label_common"
+                android:text="出生时辰" />
+
+            <EditText
+                android:editable="false"
+                android:id="@+id/birthTime"
+                style="@style/profile_right_edittext"
+                
+                android:layout_weight="1" />
+        </TableRow>
+
+        <TableRow style="@style/list_item" >
+
+            <TextView
+                style="@style/list_label_common"
+                android:layout_gravity="center|right"
+                android:text="出生重量" />
+
+            <EditText
+                android:id="@+id/weight"
+                style="@style/profile_right_edittext"
+                android:layout_weight="1"
+                android:inputType="numberDecimal" />
+        </TableRow>
+
+        <TableRow style="@style/list_item" >
+
+            <TextView
+                style="@style/list_label_common"
+                android:text="备注" />
+
+            <EditText
+                android:id="@+id/note"
+                style="@style/profile_right_edittext"
+                android:layout_weight="1"
+                android:lines="5" />
+        </TableRow>
+    </TableLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dip"
+        android:layout_marginTop="20dip"
+        android:gravity="center_horizontal" >
+
+        <Button
+            android:id="@+id/btnOK"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dip"
+            android:background="@drawable/btn_common_selector"
+            android:text="确定" />
+
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_common_selector"
+            android:text="取消" />
+    </LinearLayout>
+
+</LinearLayout>

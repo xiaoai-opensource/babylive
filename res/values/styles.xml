@@ -1,0 +1,67 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    -->
+    <style name="AppBaseTheme" parent="android:Theme.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+
+    <style name="list_label_common">
+        <item name="android:textSize">7pt</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">100dip</item>
+        <item name="android:gravity">center_vertical|right</item>
+        <item name="android:paddingRight">4dip</item>
+    </style>
+
+    <style name="list_item">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">80dip</item>
+    </style>
+
+    <style name="profile_right_edittext">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">0dip</item>
+    </style>
+
+    <style name="btn_common"></style>
+
+    <style name="label_common">
+        <item name="android:layout_height">40dip</item>
+        <item name="android:layout_width">100dip</item>
+        <item name="android:gravity">center_vertical|right</item>
+        <item name="android:textSize">7pt</item>
+        <item name="android:paddingRight">4dip</item>
+    </style>
+
+    <style name="edittext_common">
+        <item name="android:layout_height">40dip</item>
+        <item name="android:layout_width">100dip</item>
+    </style>
+
+    <style name="list_view_item">
+        <item name="android:paddingLeft">5dip</item>
+        <item name="android:paddingRight">5dip</item>
+        
+    </style>
+    <style name="list_view_item_head">
+        <item name="android:textSize">8pt</item>
+        
+    </style>
+    <style name="list_view_item_body">
+        <item name="android:textSize">6pt</item>
+        
+    </style>
+
+</resources>
