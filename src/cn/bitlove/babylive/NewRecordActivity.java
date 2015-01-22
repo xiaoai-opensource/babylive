@@ -5,16 +5,16 @@ import java.util.Calendar;
 import cn.bitlove.babylive.R;
 import cn.bitlove.babylive.database.SQLiteManager;
 import cn.bitlove.babylive.entity.Record;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class NewRecordActivity extends BaseActivity {
 	private Button btnSaveRecord;
-	private EditText etDate;
+	private TextView etDate;
 	private EditText etContent;
 	private SQLiteManager mManager ;
 	@Override
@@ -46,7 +46,7 @@ public class NewRecordActivity extends BaseActivity {
 		mContext=this;
 		mManager = SQLiteManager.getInstance(mContext);
 		btnSaveRecord = (Button)findViewById(R.id.menu_save_Record);
-		etDate = (EditText)findViewById(R.id.date);
+		etDate = (TextView)findViewById(R.id.date);
 		etContent = (EditText)findViewById(R.id.content);
 	}
 
