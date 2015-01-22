@@ -6,11 +6,25 @@
     android:orientation="horizontal" 
     android:paddingLeft="10dp"
     >
-    <ImageView 
-        android:layout_height="20dp"
-        android:layout_width="20dp"
+    
+    <FrameLayout 
+        android:layout_height="50dp"
+        android:layout_width="50dp"
+        >
+        <LinearLayout 
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            >
+            <ImageView 
+        android:layout_height="30dp"
+        android:layout_width="30dp"
         android:src="@drawable/item_indicator"
         />
+        </LinearLayout>
+        
+        
+    </FrameLayout>
     <TextView 
         android:textSize="7pt"
         android:layout_marginLeft="10dp"
