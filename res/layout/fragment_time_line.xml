@@ -6,6 +6,7 @@
     android:orientation="vertical" >
 
     <cn.bitlove.babylive.widget.TimeLine 
+       android:divider="@null"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         android:id="@+id/timeLine"
