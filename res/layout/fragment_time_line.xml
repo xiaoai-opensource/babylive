@@ -5,10 +5,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <cn.bitlove.babylive.widget.TimeLine 
-       android:divider="@null"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
+    <cn.bitlove.babylive.widget.TimeLine
         android:id="@+id/timeLine"
-        ></cn.bitlove.babylive.widget.TimeLine>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@null" >
+    </cn.bitlove.babylive.widget.TimeLine>
+
 </LinearLayout>

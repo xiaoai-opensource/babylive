@@ -40,7 +40,7 @@ public class TimeLineFragment extends Fragment {
 		}
 		itemArr = new ArrayList<String>();
 		for(int i=0;i<50;i++){
-			itemArr.add("item : " + i);
+			itemArr.add("item 几点几分类似稍等几分类似的风景江苏大丰路快速减肥斯蒂芬家里舒服亟待立法精神分裂发送到立刻就翻了三番是的风景绿色几分类似分是就翻了三番江苏大丰 : " + i);
 		}
 		
 		initTimeLine();

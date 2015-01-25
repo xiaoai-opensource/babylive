@@ -2,35 +2,43 @@
 <!-- 时间轴列表项视图 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="20dp"
-    android:orientation="horizontal" 
-    android:paddingLeft="10dp"
-    >
-    
-    <FrameLayout 
-        android:layout_height="50dp"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingLeft="10dp" >
+
+    <FrameLayout
         android:layout_width="50dp"
-        >
-        <LinearLayout 
-            android:layout_height="match_parent"
+        android:layout_height="match_parent" >
+        <LinearLayout
             android:layout_width="match_parent"
-            android:gravity="center"
-            >
-            <ImageView 
-        android:layout_height="30dp"
-        android:layout_width="30dp"
-        android:src="@drawable/item_indicator"
-        />
+            android:layout_height="match_parent"
+            android:gravity="center" >
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/line" />
         </LinearLayout>
-        
-        
+       <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center" >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/dot" />
+        </LinearLayout>
+       
     </FrameLayout>
-    <TextView 
-        android:textSize="7pt"
-        android:layout_marginLeft="10dp"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
+
+    <TextView
         android:id="@+id/timeLineItem"
-        />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:textSize="7pt" />
 
 </LinearLayout>
