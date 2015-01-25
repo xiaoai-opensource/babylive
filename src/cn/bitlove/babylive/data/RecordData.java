@@ -10,9 +10,7 @@ import cn.bitlove.babylive.entity.Record;
 public class RecordData {
 	private static RecordData mRecordData;
 	private SQLiteManager mSqlManager;
-	private Context mContext;
 	private RecordData(Context context){
-		mContext = context;
 		mSqlManager = SQLiteManager.getInstance(context);
 	}
 	public static RecordData getInstance(Context context){

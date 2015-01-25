@@ -8,11 +8,9 @@ import cn.bitlove.babylive.entity.Record;
 import cn.bitlove.babylive.util.DateTimeManager;
 import cn.bitlove.babylive.util.FileUtil;
 import cn.bitlove.babylive.util.RecordMetaUtil;
-import cn.bitlove.babylive.util.UnitSwitch;
 import cn.bitlove.remind.ToastReminder;
-
 import cn.bitlove.babylive.R;
-
+import cn.bitlove.babylive.SeflConstants;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -20,6 +18,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
+import android.text.format.DateFormat;
 import android.text.style.ImageSpan;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -91,7 +90,6 @@ public class NewRecordActivity extends BaseActivity implements OnClickListener {
 			etDate.setText(createDate);
 		}
 	}
-
 	/**
 	 * 保存记录
 	 * */
@@ -104,7 +102,7 @@ public class NewRecordActivity extends BaseActivity implements OnClickListener {
 		String strTitle = "".equals(etTitle.getText().toString())?"无标题":etTitle.getText().toString();
 		mRecord.setTitle(strTitle);
 		Calendar calendar = Calendar.getInstance();
-		String createDate = calendar.get(Calendar.YEAR)+"-"+calendar.get(Calendar.MONTH)+"-"+calendar.get(Calendar.DAY_OF_MONTH);
+		String createDate = DateFormat.format(SeflConstants.DB_DATE_FORMAT, calendar).toString();
 		mRecord.setCreateDate(createDate);
 		mRecord.setUserName("");
 		RecordData rd = RecordData.getInstance(mContext);
@@ -134,7 +132,10 @@ public class NewRecordActivity extends BaseActivity implements OnClickListener {
 			@Override
 			public void onDateSet(DatePicker view, int year, int monthOfYear,
 					int dayOfMonth) {
-				etDate.setText(year+"-"+monthOfYear+"-"+dayOfMonth);
+				Calendar calendar = Calendar.getInstance();
+				calendar.set(year, monthOfYear, dayOfMonth);
+				String date = (String) DateFormat.format(SeflConstants.DB_DATE_FORMAT, calendar);
+				etDate.setText(date);
 			}
 		});
 	}

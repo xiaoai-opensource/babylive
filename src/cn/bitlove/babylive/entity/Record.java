@@ -6,6 +6,7 @@ import java.io.Serializable;
  * 日常记录
  * */
 public class Record implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private String createDate;
 	private String actionDate;
 	private String content;
