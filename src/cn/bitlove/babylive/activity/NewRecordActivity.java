@@ -86,7 +86,7 @@ public class NewRecordActivity extends BaseActivity implements OnClickListener {
 			recordId=mRecord.getId();
 		}else{
 			Calendar calendar = Calendar.getInstance();
-			String createDate = calendar.get(Calendar.YEAR)+"-"+calendar.get(Calendar.MONTH)+"-"+calendar.get(Calendar.DAY_OF_MONTH);
+			String createDate = DateFormat.format(SeflConstants.DB_DATE_FORMAT, calendar).toString();
 			etDate.setText(createDate);
 		}
 	}
@@ -133,7 +133,7 @@ public class NewRecordActivity extends BaseActivity implements OnClickListener {
 			public void onDateSet(DatePicker view, int year, int monthOfYear,
 					int dayOfMonth) {
 				Calendar calendar = Calendar.getInstance();
-				calendar.set(year, monthOfYear, dayOfMonth);
+				calendar.set(year, monthOfYear+1, dayOfMonth);
 				String date = (String) DateFormat.format(SeflConstants.DB_DATE_FORMAT, calendar);
 				etDate.setText(date);
 			}

@@ -1,6 +1,5 @@
 package cn.bitlove.babylive.database;
 
-
 import cn.bitlove.babylive.entity.Profile;
 import cn.bitlove.babylive.entity.Record;
 import cn.bitlove.babylive.entity.RecordMeta;
@@ -52,7 +51,42 @@ public class SQLiteManager {
 		}
 
 		return cursor;
-	}	
+	}
+	/**
+	 * 获取数据库中所有记录的月份集合，月份格式yyyy-MM
+	 * */
+	public Cursor queryAllActionMonth(){
+		Cursor cursor= null;
+		try{
+			db = getSqLiteDatabase(false);
+			cursor =  db.rawQuery("select distinct(actionDate,0,8) from record", null);
+		}catch(Exception ex){
+
+		}finally{
+		}
+		return cursor;
+	}
+	/**
+	 * 获取指定月份的数据集
+	 * @param month 要读取记录的月份
+	 * @return 该月份下所有的数据
+	 * */
+	public Cursor queryMonthRecord(String month){
+		Cursor cursor= null;
+		String[] args = {month};
+		try{
+			db = getSqLiteDatabase(false);
+			cursor =  db.rawQuery("select * from record where substr(actionDate,0,8)=?", args);
+		}catch(Exception ex){
+
+		}finally{
+			if(db!=null){
+				db.close();
+				db = null;
+			}
+		}
+		return cursor;
+	}
 	/**
 	 * 保存档案
 	 * */

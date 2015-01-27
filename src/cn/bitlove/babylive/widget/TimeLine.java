@@ -10,6 +10,7 @@ import android.widget.ExpandableListView;
  * */
 public class TimeLine  extends ExpandableListView{
 	private ExpandableListAdapter mAdapter;
+	private boolean isExpandOnLoad = true;
 	public TimeLine(Context context) {
 		super(context);
 	}
@@ -20,13 +21,18 @@ public class TimeLine  extends ExpandableListView{
 	public void setAdapter(ExpandableListAdapter adapter) {
 		super.setAdapter(adapter);
 		mAdapter = adapter;
-	}
-	@Override
-	protected void onLayout(boolean changed, int l, int t, int r, int b) {
-		super.onLayout(changed, l, t, r, b);
-		for(int i=0;i<mAdapter.getGroupCount();i++){
-			expandGroup(i);
+		if(isExpandOnLoad){
+			for(int i=0;i<mAdapter.getGroupCount();i++){
+				expandGroup(i);				
+			}
 		}
 	}
-
+	/**
+	 * 是否默认展开
+	 * */
+	public void setGroupExpandOnLoad(boolean expand){
+		isExpandOnLoad = expand;
+	}
+	
+	
 }

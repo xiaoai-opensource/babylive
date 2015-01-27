@@ -3,7 +3,9 @@ package cn.bitlove.babylive.fragment;
 import java.util.ArrayList;
 
 import cn.bitlove.babylive.R;
+import cn.bitlove.babylive.data.RecordData;
 import cn.bitlove.babylive.widget.TimeLine;
+import android.content.Context;
 import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,6 +19,8 @@ import android.widget.TextView;
  * */
 public class TimeLineFragment extends Fragment {
 	private LayoutInflater mInflater;
+	private Context mContext;
+	RecordData recordData;
 	private View mView;		//自身界面
 	private TimeLine mTimeLine;	//时间轴
 	private ArrayList<String> groupArr;
@@ -33,11 +37,11 @@ public class TimeLineFragment extends Fragment {
 	 * 初始化
 	 */
 	public void init(){
+		mContext = getActivity().getBaseContext();
+		recordData = RecordData.getInstance(mContext);
 		mTimeLine = (TimeLine) mView.findViewById(R.id.timeLine);
-		groupArr = new ArrayList<String>();
-		for(int i=0;i<5;i++){
-			groupArr.add("group i :"+i);
-		}
+		groupArr = (ArrayList<String>) recordData.queryAllActionMonth();
+		
 		itemArr = new ArrayList<String>();
 		for(int i=0;i<50;i++){
 			itemArr.add("item 几点几分类似稍等几分类似的风景江苏大丰路快速减肥斯蒂芬家里舒服亟待立法精神分裂发送到立刻就翻了三番是的风景绿色几分类似分是就翻了三番江苏大丰 : " + i);

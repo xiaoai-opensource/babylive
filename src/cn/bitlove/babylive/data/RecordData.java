@@ -1,6 +1,7 @@
 package cn.bitlove.babylive.data;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -83,6 +84,48 @@ public class RecordData {
 			mSqlManager.recyle();
 		}
 		
+		return arrRecord;
+	}
+	/**
+	 * 读取所有记录中的所有年份
+	 * */
+	public List<String> queryAllActionMonth(){
+		ArrayList<String> allMonths = new ArrayList<String>();
+		Cursor cursor = mSqlManager.queryAllActionMonth();
+		if(cursor!=null && cursor.getCount()>0){
+			cursor.moveToFirst();
+			while(!cursor.isAfterLast()){
+				String month = cursor.getString(0);
+				allMonths.add(month);
+				cursor.moveToNext();
+			}
+		}
+		return allMonths;
+			
+	}
+	/**
+	 * 读取一个月份的记录
+	 * @param month 要读取的指定月份  ,格式：yyyy-mm
+	 * @return  该月份所有的记录
+	 * */
+	public List<Record> queryMonthRecord(String month){
+		ArrayList<Record> arrRecord = new ArrayList<Record>();
+		Cursor cursor = mSqlManager.queryMonthRecord(month);
+		if(cursor!=null){
+			cursor.moveToFirst();
+			while(!cursor.isAfterLast()){
+				Record record = new Record();
+				record.setUserName(cursor.getString(cursor.getColumnIndex("userName")));
+				record.setActionDate(cursor.getString(cursor.getColumnIndex("actionDate")));
+				record.setCreateDate(cursor.getString(cursor.getColumnIndex("createDate")));
+				record.setContent(cursor.getString(cursor.getColumnIndex("content")));
+				record.setTitle(cursor.getString(cursor.getColumnIndex("title")));
+				record.setId(cursor.getLong(cursor.getColumnIndex("id")));
+
+				arrRecord.add(record);				
+				cursor.moveToNext();
+			}
+		}
 		return arrRecord;
 	}
 	/**
