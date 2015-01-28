@@ -92,14 +92,24 @@ public class RecordData {
 	public List<String> queryAllActionMonth(){
 		ArrayList<String> allMonths = new ArrayList<String>();
 		Cursor cursor = mSqlManager.queryAllActionMonth();
-		if(cursor!=null && cursor.getCount()>0){
-			cursor.moveToFirst();
-			while(!cursor.isAfterLast()){
-				String month = cursor.getString(0);
-				allMonths.add(month);
-				cursor.moveToNext();
+		try{
+			if(cursor!=null && cursor.getCount()>0){
+				cursor.moveToFirst();
+				while(!cursor.isAfterLast()){
+					String month = cursor.getString(0);
+					allMonths.add(month);
+					cursor.moveToNext();
+				}
+			}
+		}catch(Exception ex){
+			
+		}finally{
+			if(cursor!=null){
+				cursor.close();
+				cursor=null;
 			}
 		}
+		
 		return allMonths;
 			
 	}
@@ -111,21 +121,31 @@ public class RecordData {
 	public List<Record> queryMonthRecord(String month){
 		ArrayList<Record> arrRecord = new ArrayList<Record>();
 		Cursor cursor = mSqlManager.queryMonthRecord(month);
-		if(cursor!=null){
-			cursor.moveToFirst();
-			while(!cursor.isAfterLast()){
-				Record record = new Record();
-				record.setUserName(cursor.getString(cursor.getColumnIndex("userName")));
-				record.setActionDate(cursor.getString(cursor.getColumnIndex("actionDate")));
-				record.setCreateDate(cursor.getString(cursor.getColumnIndex("createDate")));
-				record.setContent(cursor.getString(cursor.getColumnIndex("content")));
-				record.setTitle(cursor.getString(cursor.getColumnIndex("title")));
-				record.setId(cursor.getLong(cursor.getColumnIndex("id")));
+		try{
+			if(cursor!=null){
+				cursor.moveToFirst();
+				while(!cursor.isAfterLast()){
+					Record record = new Record();
+					record.setUserName(cursor.getString(cursor.getColumnIndex("userName")));
+					record.setActionDate(cursor.getString(cursor.getColumnIndex("actionDate")));
+					record.setCreateDate(cursor.getString(cursor.getColumnIndex("createDate")));
+					record.setContent(cursor.getString(cursor.getColumnIndex("content")));
+					record.setTitle(cursor.getString(cursor.getColumnIndex("title")));
+					record.setId(cursor.getLong(cursor.getColumnIndex("id")));
 
-				arrRecord.add(record);				
-				cursor.moveToNext();
+					arrRecord.add(record);				
+					cursor.moveToNext();
+				}
+			}
+		}catch(Exception ex){
+			
+		}finally{
+			if(cursor!=null){
+				cursor.close();
+				cursor=null;
 			}
 		}
+		
 		return arrRecord;
 	}
 	/**

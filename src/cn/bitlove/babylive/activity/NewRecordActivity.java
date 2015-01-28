@@ -81,8 +81,9 @@ public class NewRecordActivity extends BaseActivity implements OnClickListener {
 		if(mRecord!=null){
 			etDate.setText(mRecord.getActionDate());
 			etContent.setText(mRecord.getContent());
+			etTitle.setText(mRecord.getTitle());
 
-			RecordMetaUtil.parseContent(mContext,etContent);			
+			RecordMetaUtil.parseContent(mContext,etContent,RecordMetaUtil.DEFAULT_SIZE);			
 			recordId=mRecord.getId();
 		}else{
 			Calendar calendar = Calendar.getInstance();

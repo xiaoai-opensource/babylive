@@ -5,14 +5,16 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
 import android.widget.TextView;
-
 import cn.bitlove.babylive.R;
 public class RecordMetaUtil {
 
+	final public static int DEFAULT_SIZE = -1;
 	final private static String IMG_PRE="cn.bitlove.babylive.img.";
 	final private static String CONTENT_IMG="\\{imgurl=[0-9a-fA-F]{32}\\}";
 	/**
@@ -29,7 +31,7 @@ public class RecordMetaUtil {
 	/**
 	 * 解析内容中的资源信息
 	 * */
-	public static void parseContent(Context context,TextView etContent){
+	public static void parseContent(Context context,TextView etContent,int size){
 		String content = etContent.getText().toString();
 		
 		 SpannableStringBuilder ssb = new SpannableStringBuilder(content);
@@ -41,7 +43,14 @@ public class RecordMetaUtil {
 	    	 end = matcher.end();
 	    	 String imgDir = PropertyUtil.getProperty("sd_img_dir_thumbnail");
 	    	 String imgName = content.substring(start+8,end-1);
-	    	 ssb.setSpan(new ImageSpan(FileUtil.readBitmapFromSDCard(imgDir+"/"+imgName)),
+	    	 Bitmap bitmap = null;
+	    	 if(size==DEFAULT_SIZE){
+	    		 bitmap = FileUtil.readBitmapFromSDCard(imgDir+"/"+imgName);
+	    	 }else{
+	    		 
+	    		 bitmap = FileUtil.getZoomBitmap(imgDir+"/"+imgName, size);
+	    	 }
+	    	 ssb.setSpan(new ImageSpan(bitmap),
 	    			 start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 	     }
 	     

@@ -80,7 +80,6 @@ public class WaterfallListView extends ListView implements OnScrollListener {
 	 * 准备刷新
 	 * */
 	private void prepareRefresh(){
-		//Log.i(tag,"prepareRefresh");
 		mRefreshState = REFRESH_PREPARE;
 		ViewGroup vg = (ViewGroup) mListFoot.getParent();
 		if(vg!=null){
@@ -97,7 +96,6 @@ public class WaterfallListView extends ListView implements OnScrollListener {
 	 * 执行刷新
 	 * */
 	private void doRefresh(){
-		//Log.i(tag,"doRefresh");
 		mRefreshState=REFRESH_ING;
 
 		if(mRefreshListener!=null){
@@ -109,7 +107,6 @@ public class WaterfallListView extends ListView implements OnScrollListener {
 	 * 完成刷新
 	 * */
 	public void completeRefresh(){
-		//Log.i(tag,"completeRefresh");
 		mRefreshState = REFRESH_IDEL;
 		mFooterLayout.removeAllViews();
 	}

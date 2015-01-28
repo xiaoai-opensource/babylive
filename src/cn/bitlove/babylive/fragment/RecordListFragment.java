@@ -1,7 +1,6 @@
 package cn.bitlove.babylive.fragment;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import cn.bitlove.babylive.R;
 import cn.bitlove.babylive.activity.NewRecordActivity;
@@ -17,13 +16,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.ListAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;

@@ -59,7 +59,7 @@ public class SQLiteManager {
 		Cursor cursor= null;
 		try{
 			db = getSqLiteDatabase(false);
-			cursor =  db.rawQuery("select distinct(actionDate,0,8) from record", null);
+			cursor =  db.rawQuery("select distinct substr(actionDate,0,8) from record", null);
 		}catch(Exception ex){
 
 		}finally{
@@ -76,14 +76,11 @@ public class SQLiteManager {
 		String[] args = {month};
 		try{
 			db = getSqLiteDatabase(false);
-			cursor =  db.rawQuery("select * from record where substr(actionDate,0,8)=?", args);
+			String sql = String.format("select * from record where substr(actionDate,0,8)='%s'", args);
+			cursor =  db.rawQuery(sql, null);
 		}catch(Exception ex){
 
 		}finally{
-			if(db!=null){
-				db.close();
-				db = null;
-			}
 		}
 		return cursor;
 	}

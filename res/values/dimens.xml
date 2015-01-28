@@ -7,5 +7,6 @@
     <dimen name="item_del_width">100dp</dimen>
     <dimen name="item_height">30dp</dimen>
     <dimen name="time_line_indicator_width">40dp</dimen>
+    <dimen name="time_line_item_margin_left">10dp</dimen>
 
 </resources>

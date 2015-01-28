@@ -114,7 +114,7 @@ public class FileUtil {
 		float imgWidth = bmm.width;		//图片真实宽度
 		float imgHeight = bmm.height;	//图片真实高度
 
-		Bitmap bitmapThumbnail = getZoomBitmap(filePath);
+		Bitmap bitmapThumbnail = getZoomBitmap(filePath,IMAGE_LIMIT_SIZE);
 		
 		float scale = width/imgWidth;			//压缩比例
 		int height = (int)(imgHeight * scale);
@@ -191,7 +191,10 @@ public class FileUtil {
 	/**
 	 * 压缩图片
 	 * */
-	public static Bitmap getZoomBitmap(String filePath){
+	public static Bitmap getZoomBitmap(String filePath,int size){
+		if(size==0){
+			throw new IllegalArgumentException("size 不能为 零");
+		}
 		BitmapFactory.Options newOpts = new BitmapFactory.Options();
 		newOpts.inJustDecodeBounds = true;
 		BitmapFactory.decodeFile(filePath, newOpts);
@@ -200,7 +203,7 @@ public class FileUtil {
 		float imgHeight = newOpts.outHeight;	//图片真实高度
 		
 		int zoom = 1;
-		while((imgWidth/zoom)*(imgHeight/zoom)>IMAGE_LIMIT_SIZE){
+		while((imgWidth/zoom)*(imgHeight/zoom)>size){
 			zoom *=2;
 		}
 		newOpts.inJustDecodeBounds = false;

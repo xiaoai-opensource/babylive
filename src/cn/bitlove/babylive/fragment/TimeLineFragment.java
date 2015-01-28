@@ -1,9 +1,12 @@
 package cn.bitlove.babylive.fragment;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import cn.bitlove.babylive.R;
 import cn.bitlove.babylive.data.RecordData;
+import cn.bitlove.babylive.entity.Record;
+import cn.bitlove.babylive.util.RecordMetaUtil;
 import cn.bitlove.babylive.widget.TimeLine;
 import android.content.Context;
 import android.database.DataSetObserver;
@@ -20,11 +23,12 @@ import android.widget.TextView;
 public class TimeLineFragment extends Fragment {
 	private LayoutInflater mInflater;
 	private Context mContext;
-	RecordData recordData;
+	private RecordData recordData;
 	private View mView;		//自身界面
 	private TimeLine mTimeLine;	//时间轴
 	private ArrayList<String> groupArr;
 	private ArrayList<String> itemArr;
+	private HashMap<String, Object> children;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -41,13 +45,26 @@ public class TimeLineFragment extends Fragment {
 		recordData = RecordData.getInstance(mContext);
 		mTimeLine = (TimeLine) mView.findViewById(R.id.timeLine);
 		groupArr = (ArrayList<String>) recordData.queryAllActionMonth();
-		
+		children = new HashMap<String, Object>();
 		itemArr = new ArrayList<String>();
 		for(int i=0;i<50;i++){
 			itemArr.add("item 几点几分类似稍等几分类似的风景江苏大丰路快速减肥斯蒂芬家里舒服亟待立法精神分裂发送到立刻就翻了三番是的风景绿色几分类似分是就翻了三番江苏大丰 : " + i);
 		}
 		
 		initTimeLine();
+	}
+	/**
+	 * 获取指定组的子对象
+	 * @param groupKey  要获取的组的id
+	 * */
+	public ArrayList<Record> getChildren(String groupKey){
+		ArrayList<Record> items = (ArrayList<Record>) children.get(groupKey);
+		if(items == null){
+			items = (ArrayList<Record>) recordData.queryMonthRecord(groupKey);
+			children.put(groupKey, items);
+		}
+		
+		return items;
 	}
 	/**
 	 * 初始化时间轴
@@ -121,14 +138,30 @@ public class TimeLineFragment extends Fragment {
 			
 			@Override
 			public int getChildrenCount(int groupPosition) {
-				return 10;
+				String groupKey = getGroup(groupPosition).toString();
+				ArrayList<Record> items = getChildren(groupKey);
+				return items.size();
 			}
 			
 			@Override
 			public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+				String groupKey = getGroup(groupPosition).toString();
+				ArrayList<Record> items = getChildren(groupKey);
+				
+				Record record = items.get(childPosition);
 				View item = mInflater.inflate(R.layout.time_line_item, null);
-				TextView tv = (TextView) item.findViewById(R.id.timeLineItem);
-				tv.setText(itemArr.get(childPosition));
+				TextView tvTitle = (TextView) item.findViewById(R.id.timeLineItemTitle);
+				tvTitle.setText(record.getTitle());
+				
+				TextView tvTime = (TextView) item.findViewById(R.id.timeLineItemTime);
+				String date = record.getActionDate();
+				date = date.substring(date.lastIndexOf("-")+1);
+				tvTime.setText(date+"日");
+				
+				TextView tvContent = (TextView) item.findViewById(R.id.timeLineItemContent);
+				tvContent.setText(record.getContent());
+ 				RecordMetaUtil.parseContent(mContext,tvContent,300*300);
+				
 				return item;
 			}
 			
@@ -139,7 +172,9 @@ public class TimeLineFragment extends Fragment {
 			
 			@Override
 			public Object getChild(int groupPosition, int childPosition) {
-				return itemArr.get(childPosition);
+				String groupKey = getGroup(groupPosition).toString();
+				ArrayList<Record> items = getChildren(groupKey);
+				return items.get(childPosition);
 			}
 			
 			@Override
