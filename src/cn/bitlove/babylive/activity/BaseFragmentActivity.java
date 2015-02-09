@@ -17,7 +17,7 @@ import android.widget.RelativeLayout;
 /**
  * Fragment类基类
  * */
-public class BaseFragmentActivity extends FragmentActivity implements OnClickListener{
+public class BaseFragmentActivity extends BaseSlideMenuActivity implements OnClickListener{
 	protected Context mContext = this;
 	protected Activity mActivity = this;
 	protected ManageActivity ma;

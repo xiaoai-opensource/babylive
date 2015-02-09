@@ -12,18 +12,16 @@ import cn.bitlove.babylive.widget.PagerIndicator;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 public class MainFragmentActivity extends BaseFragmentActivity implements OnClickListener {
-	private ViewPager vp;
 	private List<ViewPagerHolder> fragmentList ;
 	private ViewGroup indicators ;
+	private FragmentManager mFManager;
 
 	/**
 	 * ViewPager 指示器选择事件
@@ -36,7 +34,7 @@ public class MainFragmentActivity extends BaseFragmentActivity implements OnClic
 			for(int i=0;i<indicators.getChildCount();i++){
 				TextView label = (TextView) indicators.getChildAt(i).findViewById(R.id.label_indicator);
 				if(label == labelIndicator){
-					vp.setCurrentItem(i, true);
+					changeTab(i);
 				}
 			}
 		}
@@ -45,19 +43,21 @@ public class MainFragmentActivity extends BaseFragmentActivity implements OnClic
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_man_fragment);
+		setSlideRole(R.layout.fragment_main_menu);
+		setSlideRole(R.layout.activity_man_fragment);
 
 		initActionBar();
 		init();
 		initFragments();
-		initAdapter();
 		initIndicators();
+
+		//chage Tab to 0
+		changeTab(0);
 	}
 	private void init(){
-		vp = (ViewPager) findViewById(R.id.main_pager);
-		vp.setOnPageChangeListener(pageChangeListener);
 		indicators = (ViewGroup)findViewById(R.id.indicators);
-		//indicators.setOnClickListener(indicatorClick);
+		indicators.setOnClickListener(indicatorClick);
+		mFManager = getSupportFragmentManager();
 	}
 
 	/**
@@ -78,30 +78,14 @@ public class MainFragmentActivity extends BaseFragmentActivity implements OnClic
 		fh.indicatorUnFocus = R.drawable.time_line_unfocus;
 		fh.label = "时间轴";
 		fragmentList.add(fh);
-		
+
 		fh = new ViewPagerHolder();
 		fh.fragment = new ProfileFragment();
 		fh.indicatorFocus = R.drawable.profile_focus;
 		fh.indicatorUnFocus = R.drawable.profile_unfocus;
 		fh.label = "档案";
 		fragmentList.add(fh);
-		
-	}
-	/**
-	 * 初始化Viewpager适配器
-	 * */
-	private void initAdapter(){
-		vp.setAdapter(new FragmentPagerAdapter(mFM) {
 
-			@Override
-			public int getCount() {
-				return fragmentList.size();
-			}
-			@Override
-			public Fragment getItem(int index) {
-				return fragmentList.get(index).fragment;
-			}
-		});
 	}
 	/**
 	 * 初始化ViewPager指示器
@@ -114,12 +98,16 @@ public class MainFragmentActivity extends BaseFragmentActivity implements OnClic
 		}
 	}
 	/**
-	 * ViewPager 滑动事件
+	 * 切换Tab页
+	 * @param position	要切换到的Tab下标
+	 * @author luoaz
 	 * */
-	OnPageChangeListener pageChangeListener = new OnPageChangeListener() {
-
-		@Override
-		public void onPageSelected(int position) {
+	private void changeTab(int position){
+		if(position<0){
+			throw new IllegalArgumentException("position 不能小于0");
+		}
+		try{
+			//change Tab
 			int count = indicators.getChildCount();
 			for(int i=0;i<count;i++){
 				View indicator = indicators.getChildAt(i);
@@ -134,16 +122,16 @@ public class MainFragmentActivity extends BaseFragmentActivity implements OnClic
 					labelIndicator.setTextColor(Color.GRAY);
 				}
 			}
-		}
 
-		@Override
-		public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-		}
+			//change fragment
+			Fragment replace = fragmentList.get(position).fragment;
+			mFManager.beginTransaction().replace(R.id.mainFragment, replace)
+			.commit();
+		}catch(Exception ex){
+			ex.printStackTrace();
+			throw new IllegalAccessError("Tab 页内容初始化有问题，请检查");
 
-		@Override
-		public void onPageScrollStateChanged(int state) {
-
 		}
-	};
+	}
 
 }
