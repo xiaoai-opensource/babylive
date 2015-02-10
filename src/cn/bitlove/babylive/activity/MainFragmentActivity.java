@@ -26,7 +26,7 @@ public class MainFragmentActivity extends BaseFragmentActivity implements OnClic
 	private ViewGroup indicators ;
 
 	/**
-	 * ViewPager 指示器选择事件
+	 * ViewPager 指示器选择事件 
 	 * */
 	OnClickListener indicatorClick = new OnClickListener() {
 
