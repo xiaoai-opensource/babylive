@@ -13,8 +13,8 @@
     <dimen name="font_size_left_label_text">15sp</dimen>
     <dimen name="font_size_common">15sp</dimen>
     
-    <dimen name="padding_bottom_item_profile">3dp</dimen>
-    <dimen name="padding_top_item_profile">3dp</dimen>
+    <dimen name="padding_bottom_item_profile">5dp</dimen>
+    <dimen name="padding_top_item_profile">5dp</dimen>
     <dimen name="padding_left_item_profile">13dp</dimen>
 
 </resources>

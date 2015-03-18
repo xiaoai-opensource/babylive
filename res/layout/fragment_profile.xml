@@ -9,132 +9,110 @@
 
     <include layout="@layout/common_divide_whole" />
 
-    <LinearLayout
+    <RelativeLayout
+        style="@style/profile_item"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/forground_common"
-        android:orientation="horizontal" >
+        android:layout_height="wrap_content" >
 
         <TextView
             style="@style/list_label_common"
             android:text="姓名" />
 
-        <EditText
+        <TextView
             android:id="@+id/name"
-            style="@style/profile_right_edittext"
-            android:layout_weight="1" />
-    </LinearLayout>
+            style="@style/profile_right_text"
+            android:text="姓名" />
+    </RelativeLayout>
 
     <include layout="@layout/common_divide" />
 
-    <LinearLayout
+    <RelativeLayout
+        style="@style/profile_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:background="@color/forground_common"
         android:orientation="horizontal" >
 
         <TextView
             style="@style/list_label_common"
             android:text="性别" />
 
-        <RadioGroup
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="horizontal" >
-
-            <RadioButton
-                android:id="@+id/sex"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="男" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="女" />
-        </RadioGroup>
-    </LinearLayout>
+        <TextView
+            style="@style/profile_right_text"
+            android:text="" />
+    </RelativeLayout>
 
     <include layout="@layout/common_divide_whole" />
 
-    <LinearLayout
+    <RelativeLayout
+        style="@style/profile_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/forground_common"
         android:orientation="horizontal" >
 
         <TextView
             style="@style/list_label_common"
             android:text="出生日期" />
 
-        <EditText
-            android:id="@+id/birthday"
-            style="@style/profile_right_edittext"
-            android:layout_weight="1"
-            android:editable="false" />
-    </LinearLayout>
+        <TextView
+            style="@style/profile_right_text"
+            android:text="出生日期" />
+    </RelativeLayout>
 
     <include layout="@layout/common_divide" />
 
-    <LinearLayout
+    <RelativeLayout
+        style="@style/profile_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/forground_common"
         android:orientation="horizontal" >
 
         <TextView
             style="@style/list_label_common"
             android:text="出生时辰" />
 
-        <EditText
-            android:id="@+id/birthTime"
-            style="@style/profile_right_edittext"
-            android:layout_weight="1"
-            android:editable="false" /> 
-    </LinearLayout>
+        <TextView
+            style="@style/profile_right_text"
+            android:text="出生时辰" />
+    </RelativeLayout>
 
     <include layout="@layout/common_divide" />
 
-    <LinearLayout
+    <RelativeLayout
+        style="@style/profile_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/forground_common"
-        
-        android:orientation="horizontal"
-        android:layout_marginBottom="10dp" >
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal" >
 
         <TextView
             style="@style/list_label_common"
             android:layout_gravity="center|right"
             android:text="出生重量" />
 
-        <EditText
-            android:id="@+id/weight"
-            style="@style/profile_right_edittext"
-            android:layout_weight="1"
-            android:inputType="numberDecimal" />
-    </LinearLayout>
+        <TextView
+            style="@style/profile_right_text"
+            android:layout_gravity="right"
+            android:text="出生重量" />
+    </RelativeLayout>
 
+
+    <TextView
+        style="@style/list_label_common"
+        android:text="备注" />
     <include layout="@layout/common_divide_whole" />
-
     <LinearLayout
+        style="@style/profile_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/forground_common"
-        android:orientation="horizontal" >
-
-        <TextView
-            style="@style/list_label_common"
-            android:text="备注" />
+        android:orientation="vertical" >
 
         <EditText
             android:id="@+id/note"
-            style="@style/profile_right_edittext"
+            style="@style/profile_right_text"
             android:layout_weight="1"
             android:lines="5" />
     </LinearLayout>
-    
 
     <include
         android:layout_marginTop="10dp"
