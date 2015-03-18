@@ -91,7 +91,7 @@
             android:id="@+id/birthTime"
             style="@style/profile_right_edittext"
             android:layout_weight="1"
-            android:editable="false" />
+            android:editable="false" /> 
     </LinearLayout>
 
     <include layout="@layout/common_divide" />
@@ -134,6 +134,7 @@
             android:layout_weight="1"
             android:lines="5" />
     </LinearLayout>
+    
 
     <include
         android:layout_marginTop="10dp"
