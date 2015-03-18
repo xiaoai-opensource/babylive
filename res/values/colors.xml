@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <color name="blur_bg">#FFFAF0</color>
     <color name="black">#000000</color>
     <color name="grey">#808080</color>
     <color name="right_bg">#696969</color>
     <color name="white">#ffffffff</color>
     <color name="green">#009900</color>
+    <color name="font_theme">#ff333333</color>
+    
+    <color name="background_common">#fff2f2f2</color>
+    <color name="forground_common">#fffcfcfc</color>
+    <color name="divide_common">#ffc0c0c0</color>
+    
+
 </resources>
