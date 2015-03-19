@@ -11,6 +11,9 @@ public class ProfileFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+        /**
+         * 初始化
+         * */
 		View fragmentView = inflater.inflate(R.layout.fragment_profile, null);
 
 		return fragmentView;
