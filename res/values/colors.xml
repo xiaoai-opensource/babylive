@@ -12,6 +12,8 @@
     <color name="background_common">#fff2f2f2</color>
     <color name="forground_common">#fffcfcfc</color>
     <color name="divide_common">#ffc0c0c0</color>
+
+    <color name="title">#ff3086f2</color>
     
 
 </resources>

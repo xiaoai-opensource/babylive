@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
+    <include layout="@layout/actionbar_time_line" />
     <cn.bitlove.babylive.widget.TimeLine
         android:id="@+id/timeLine"
         android:layout_width="match_parent"

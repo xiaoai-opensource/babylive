@@ -47,7 +47,6 @@ public class MainFragmentActivity extends BaseFragmentActivity implements OnClic
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_man_fragment);
 
-		initActionBar();
 		init();
 		initFragments();
 		initAdapter();

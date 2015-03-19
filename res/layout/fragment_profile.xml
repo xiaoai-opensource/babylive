@@ -4,19 +4,21 @@
     android:layout_height="match_parent"
     android:background="@color/background_common"
     android:orientation="vertical"
-    android:paddingTop="10dp">
+    >
 
+    <include layout="@layout/actionbar_profile" />
     <include layout="@layout/common_divide_whole" />
 
     <RelativeLayout
+        android:id="@+id/layoutName"
         style="@style/profile_item"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="@dimen/item_height">
 
         <TextView
             style="@style/list_label_common"
             android:layout_centerVertical="true"
-            android:text="姓名" />
+            android:text="@string/name" />
 
         <TextView
             android:id="@+id/name"
@@ -24,114 +26,104 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/arrow_right_width" />
 
-        <include
-            layout="@layout/common_arrow_right"
-            android:layout_width="@dimen/arrow_right_width"
-            android:layout_height="@dimen/arrow_right_height"
-            android:layout_alignParentRight="true"></include>
     </RelativeLayout>
 
     <include layout="@layout/common_divide" />
 
     <RelativeLayout
+        android:id="@+id/layoutSex"
         style="@style/profile_item"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
+        android:layout_height="@dimen/item_height"
         android:orientation="horizontal">
 
         <TextView
             style="@style/list_label_common"
             android:layout_centerVertical="true"
-            android:text="性别" />
+            android:text="@string/sex" />
 
         <TextView
+            style="@style/profile_right_text"
+            android:layout_centerVertical="true" />
+
+    </RelativeLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_group_divide_height" />
+
+
+    <include layout="@layout/common_divide_whole" />
+
+    <RelativeLayout
+        android:id="@+id/layoutBirthday"
+        style="@style/profile_item"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/list_label_common"
             android:layout_centerVertical="true"
-            style="@style/profile_right_text" />
-        <include
-            layout="@layout/common_arrow_right"
-            android:layout_width="@dimen/arrow_right_width"
-            android:layout_height="@dimen/arrow_right_height"
-            android:layout_alignParentRight="true"></include>
+            android:text="@string/birthday" />
+
+        <TextView
+            style="@style/profile_right_text"
+            android:layout_centerVertical="true" />
+
+    </RelativeLayout>
+
+    <include layout="@layout/common_divide" />
+
+    <RelativeLayout
+        android:id="@+id/layoutBirthTime"
+        style="@style/profile_item"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/list_label_common"
+            android:layout_centerVertical="true"
+            android:text="@string/birthtime" />
+
+        <TextView
+            style="@style/profile_right_text"
+            android:layout_centerVertical="true" />
+
+    </RelativeLayout>
+
+    <include layout="@layout/common_divide" />
+
+    <RelativeLayout
+        android:id="@+id/layoutBirthWeight"
+        style="@style/profile_item"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/list_label_common"
+            android:layout_centerVertical="true"
+            android:text="@string/birthWeight" />
+
+        <TextView
+            style="@style/profile_right_text"
+            android:layout_centerVertical="true" />
+
 
     </RelativeLayout>
 
     <include layout="@layout/common_divide_whole" />
 
-    <RelativeLayout
-        style="@style/profile_item"
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            style="@style/list_label_common"
-            android:layout_centerVertical="true"
-            android:text="出生日期" />
-
-        <TextView style="@style/profile_right_text"
-            android:layout_centerVertical="true"
-            />
-        <include
-            layout="@layout/common_arrow_right"
-            android:layout_width="@dimen/arrow_right_width"
-            android:layout_height="@dimen/arrow_right_height"
-            android:layout_alignParentRight="true"></include>
-    </RelativeLayout>
-
-    <include layout="@layout/common_divide" />
-
-    <RelativeLayout
-        style="@style/profile_item"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            style="@style/list_label_common"
-            android:layout_centerVertical="true"
-            android:text="出生时辰" />
-
-        <TextView style="@style/profile_right_text"
-            android:layout_centerVertical="true"
-            />
-        <include
-            layout="@layout/common_arrow_right"
-            android:layout_width="@dimen/arrow_right_width"
-            android:layout_height="@dimen/arrow_right_height"
-            android:layout_alignParentRight="true"></include>
-    </RelativeLayout>
-
-    <include layout="@layout/common_divide" />
-
-    <RelativeLayout
-        style="@style/profile_item"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            style="@style/list_label_common"
-            android:layout_centerVertical="true"
-            android:text="出生重量" />
-
-        <TextView style="@style/profile_right_text"
-            android:layout_centerVertical="true"
-            />
-        <include
-            layout="@layout/common_arrow_right"
-            android:layout_width="@dimen/arrow_right_width"
-            android:layout_height="@dimen/arrow_right_height"
-            android:layout_alignParentRight="true"></include>
-
-    </RelativeLayout>
-
-    <include layout="@layout/common_divide_whole" />
+        android:layout_height="@dimen/item_group_divide_height" />
 
     <TextView
         style="@style/list_label_common"
-        android:layout_marginTop="10dp"
-        android:text="备注" />
+        android:text="@string/note" />
 
     <include layout="@layout/common_divide_whole" />
 
@@ -146,7 +138,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/no_border"
-            android:lines="5" />
+            android:gravity="top"
+            android:hint="@string/notHint"
+            android:lines="5"
+            android:paddingLeft="3dp" />
     </LinearLayout>
 
     <include layout="@layout/common_divide_whole" />
