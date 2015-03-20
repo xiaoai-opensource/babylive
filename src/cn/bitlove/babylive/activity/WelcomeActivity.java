@@ -30,8 +30,6 @@ public class WelcomeActivity extends BaseActivity {
 		}else{
 			cursor.close();
 			cursor=null;
-			Intent intent = new Intent(this,MainActivity.class);
-			startActivity(intent);
 		}
 	}
 }

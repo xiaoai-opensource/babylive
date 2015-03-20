@@ -1,148 +1,176 @@
 package cn.bitlove.babylive.activity;
 
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.bitlove.babylive.R;
-import cn.bitlove.babylive.ViewPagerHolder;
+import cn.bitlove.babylive.fragment.ConfigFragment;
 import cn.bitlove.babylive.fragment.ProfileFragment;
 import cn.bitlove.babylive.fragment.RecordListFragment;
 import cn.bitlove.babylive.fragment.TimeLineFragment;
-import cn.bitlove.babylive.widget.PagerIndicator;
-import android.graphics.Color;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 public class MainFragmentActivity extends BaseFragmentActivity implements OnClickListener {
-	private ViewPager vp;
-	private List<ViewPagerHolder> fragmentList ;
-	private ViewGroup indicators ;
+    View layoutRecords;
+    View layoutCategory;
+    View layoutAddNote;
+    View layoutTags;
+    View layoutConfig;
 
-	/**
-	 * ViewPager 指示器选择事件 
-	 * */
-	OnClickListener indicatorClick = new OnClickListener() {
+    Fragment recordFragment;
+    Fragment categoryFrament;
+    Fragment tagFragment;
+    Fragment configFragment;
 
-		@Override
-		public void onClick(View v) {
-			TextView labelIndicator = (TextView) v.findViewById(R.id.label_indicator);
-			for(int i=0;i<indicators.getChildCount();i++){
-				TextView label = (TextView) indicators.getChildAt(i).findViewById(R.id.label_indicator);
-				if(label == labelIndicator){
-					vp.setCurrentItem(i, true);
-				}
-			}
-		}
-	};
+    List<View> viewsToChange = new ArrayList<View>();
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_man_fragment);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_man_fragment);
+        init();
+    }
 
-		init();
-		initFragments();
-		initAdapter();
-		initIndicators();
-	}
-	private void init(){
-		vp = (ViewPager) findViewById(R.id.main_pager);
-		vp.setOnPageChangeListener(pageChangeListener);
-		indicators = (ViewGroup)findViewById(R.id.indicators);
-		//indicators.setOnClickListener(indicatorClick);
-	}
+    private void init() {
+        layoutRecords = findViewById(R.id.layoutRecords);
+        layoutRecords.setOnClickListener(this);
+        layoutCategory = findViewById(R.id.layoutCategory);
+        layoutCategory.setOnClickListener(this);
+        layoutAddNote = findViewById(R.id.layoutAddNote);
+        layoutAddNote.setOnClickListener(this);
+        layoutTags = findViewById(R.id.layoutTags);
+        layoutTags.setOnClickListener(this);
+        layoutConfig = findViewById(R.id.layoutConfig);
+        layoutConfig.setOnClickListener(this);
 
-	/**
-	 * 初始化当前Viewpager的Fragment对象
-	 * */
-	private void initFragments(){
-		fragmentList = new ArrayList<ViewPagerHolder>();
-		ViewPagerHolder fh = new ViewPagerHolder();
-		fh.fragment = new RecordListFragment();
-		fh.indicatorFocus = R.drawable.record_focus;
-		fh.indicatorUnFocus = R.drawable.record_unfocus;		
-		fh.label = "记录";
-		fragmentList.add(fh);
+        viewsToChange.add(layoutRecords);
+        viewsToChange.add(layoutCategory);
+        viewsToChange.add(layoutTags);
+        viewsToChange.add(layoutConfig);
 
-		fh = new ViewPagerHolder();
-		fh.fragment = new TimeLineFragment();
-		fh.indicatorFocus = R.drawable.time_line_focus;
-		fh.indicatorUnFocus = R.drawable.time_line_unfocus;
-		fh.label = "时间轴";
-		fragmentList.add(fh);
-		
-		fh = new ViewPagerHolder();
-		fh.fragment = new ProfileFragment();
-		fh.indicatorFocus = R.drawable.profile_focus;
-		fh.indicatorUnFocus = R.drawable.profile_unfocus;
-		fh.label = "档案";
-		fragmentList.add(fh);
-		
-	}
-	/**
-	 * 初始化Viewpager适配器
-	 * */
-	private void initAdapter(){
-		vp.setAdapter(new FragmentPagerAdapter(mFM) {
+        recordFragment = new RecordListFragment();
+        categoryFrament = new TimeLineFragment();
+        tagFragment = new ProfileFragment();
+        configFragment = new ConfigFragment();
+    }
 
-			@Override
-			public int getCount() {
-				return fragmentList.size();
-			}
-			@Override
-			public Fragment getItem(int index) {
-				return fragmentList.get(index).fragment;
-			}
-		});
-	}
-	/**
-	 * 初始化ViewPager指示器
-	 * */
-	private void initIndicators(){
-		PagerIndicator pi = new PagerIndicator(mContext);
-		pi.build(fragmentList,indicators);
-		for(int i=0;i<indicators.getChildCount();i++){
-			indicators.getChildAt(i).setOnClickListener(indicatorClick);
-		}
-	}
-	/**
-	 * ViewPager 滑动事件
-	 * */
-	OnPageChangeListener pageChangeListener = new OnPageChangeListener() {
+    /**
+     * 改变导航文本字体颜色
+     *
+     * @param view    ,要修改的view
+     * @param isFocus boolean 是否为焦点状态
+     */
+    private void changeTextColor(View view, Boolean isFocus) {
 
-		@Override
-		public void onPageSelected(int position) {
-			int count = indicators.getChildCount();
-			for(int i=0;i<count;i++){
-				View indicator = indicators.getChildAt(i);
-				View imgIndicator = indicator.findViewById(R.id.img_indicator);
-				TextView labelIndicator = (TextView) indicator.findViewById(R.id.label_indicator);
-				ViewPagerHolder vph = fragmentList.get(i);
-				if(i==position){
-					imgIndicator.setBackgroundDrawable(getResources().getDrawable(vph.indicatorFocus));
-					labelIndicator.setTextColor(getResources().getColor(R.color.green));
-				}else{
-					imgIndicator.setBackgroundDrawable(getResources().getDrawable(vph.indicatorUnFocus));
-					labelIndicator.setTextColor(Color.GRAY);
-				}
-			}
-		}
+        TextView label = (TextView) view.findViewWithTag("navLabel");
+        if (isFocus) {
+            label.setTextColor(getResources().getColor(R.color.green));
+        } else {
+            label.setTextColor(getResources().getColor(R.color.grey));
+        }
+    }
 
-		@Override
-		public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-		}
+    /**
+     * 切换导航背景图片以及内容fragment
+     *
+     * @param view    导航的view
+     * @param isFocus boolean 是否为焦点状态
+     */
+    private void changeImgAndFragment(View view, Boolean isFocus) {
+        ImageView imageView = (ImageView) view.findViewWithTag("navImg");
+        if (isFocus) {
+            switch (view.getId()) {
+                case R.id.layoutRecords:
+                    imageView.setImageResource(R.drawable.record_focus);
+                    switchFragment(recordFragment);
+                    break;
+                case R.id.layoutCategory:
+                    imageView.setImageResource(R.drawable.time_line_focus);
+                    switchFragment(categoryFrament);
+                    break;
+                case R.id.layoutTags:
+                    imageView.setImageResource(R.drawable.profile_focus);
+                    switchFragment(tagFragment);
+                    break;
+                case R.id.layoutConfig:
+                    imageView.setImageResource(R.drawable.config_unfocus);
+                    switchFragment(configFragment);
 
-		@Override
-		public void onPageScrollStateChanged(int state) {
+                    break;
+                default:
+            }
+        } else {
+            switch (view.getId()) {
+                case R.id.layoutRecords:
+                    imageView.setImageResource(R.drawable.record_unfocus);
+                    break;
+                case R.id.layoutCategory:
+                    imageView.setImageResource(R.drawable.time_line_unfocus);
+                    break;
+                case R.id.layoutTags:
+                    imageView.setImageResource(R.drawable.profile_unfocus);
+                    break;
+                case R.id.layoutConfig:
+                    imageView.setImageResource(R.drawable.config_unfocus);
+                    break;
+                case R.id.layoutAddNote:
+                    Intent intent = new Intent(this, NewRecordActivity.class);
+                    startActivity(intent);
+                    break;
+                default:
 
-		}
-	};
+            }
+        }
+    }
 
+    /**
+     * 切换内容Fragment
+     *
+     * @param fragment 要切换的Fragment
+     */
+    private void switchFragment(Fragment fragment) {
+        FragmentTransaction transaction = mFM.beginTransaction();
+        transaction.replace(R.id.contentFragment, fragment);
+        transaction.commit();
+    }
+
+    /**
+     * 切换Nav
+     */
+
+    private void changeNav(View curView) {
+        if (curView.getId() != layoutAddNote.getId()) {
+            int size = viewsToChange.size();
+            for (int i = 0; i < size; i++) {
+                View temp = viewsToChange.get(i);
+                if (temp.equals(curView)) {
+                    changeTextColor(temp, true);
+                    changeImgAndFragment(temp, true);
+                } else {
+                    changeTextColor(temp, false);
+                    changeImgAndFragment(temp, false);
+                }
+            }
+        } else {
+            Intent intent = new Intent(this, NewRecordActivity.class);
+            startActivity(intent);
+        }
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        super.onClick(v);
+        changeNav(v);
+    }
 }

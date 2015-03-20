@@ -16,6 +16,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +43,7 @@ public class RecordListFragment extends Fragment{
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		fragmentView = inflater.inflate(R.layout.fragment_record_list, null);
-		mContext = getActivity();
+        mContext = getActivity();
 		mActivity = getActivity();
 		ma=ManageActivity.getInstance(mContext);
 		mInflater = inflater;
