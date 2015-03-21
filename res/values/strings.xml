@@ -17,5 +17,7 @@
     <string name="config">设置</string>
     <string name="label">标签</string>
     <string name="edit">编辑</string>
+    <string name="save">保存</string>
+    <string name="click_title">点击输入标题</string>
 
 </resources>

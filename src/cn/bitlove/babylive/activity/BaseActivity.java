@@ -32,7 +32,7 @@ public class BaseActivity extends Activity implements OnClickListener {
 	 * 初始化ActionBar
 	 * */
 	protected void initActionBar() {
-		RelativeLayout rl = (RelativeLayout)findViewById(R.id.titleBar);
+		/*RelativeLayout rl = (RelativeLayout)findViewById(R.id.titleBar);
 		ViewGroup vg = (ViewGroup)LayoutInflater.from(mContext).inflate(R.layout.actionbar_common, null);
 		rl.addView(vg);
 		View backUp = rl.findViewById(R.id.backUp);
@@ -43,7 +43,7 @@ public class BaseActivity extends Activity implements OnClickListener {
 		newProfile.setOnClickListener(this);
 		
 		View test = rl.findViewById(R.id.menuTest);
-		test.setOnClickListener(this);
+		test.setOnClickListener(this);*/
 	}
 	@Override
 	public void onClick(View v) {

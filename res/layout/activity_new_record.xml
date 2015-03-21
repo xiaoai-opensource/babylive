@@ -4,17 +4,27 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
+    <include layout="@layout/actionbar_new_record" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
         <EditText
             android:id="@+id/title"
+            android:background="@drawable/no_border"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="标题" />
+            android:hint="@string/click_title" />
+
+        <include layout="@layout/common_divide_whole"
+            android:layout_height="1dp"
+            android:layout_width="match_parent"
+            android:layout_below="@id/title"
+            />
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/dateLabel"
             android:layout_height="40dp"
             android:layout_width="100dp"
@@ -25,6 +35,7 @@
             android:text="发生时间" />
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/date"
             style="@style/label_common"
             android:layout_below="@id/title"
@@ -35,19 +46,9 @@
         android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_below="@id/dateLabel"
-        android:layout_marginLeft="1dip"
-        android:layout_marginRight="1dip"
+        android:layout_below="@id/title"
         android:layout_weight="1"
-        android:background="@drawable/mutiline_edittext"
+        android:background="@drawable/no_border"
         android:gravity="top"
-        android:lines="18"
         android:padding="4dip" />
-
-    <RelativeLayout
-        android:id="@+id/titleBar"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/actionBar_height" >
-    </RelativeLayout>
-
 </LinearLayout>

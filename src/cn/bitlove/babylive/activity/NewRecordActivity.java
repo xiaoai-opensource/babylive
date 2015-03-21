@@ -50,16 +50,14 @@ public class NewRecordActivity extends BaseActivity implements OnClickListener {
 	}
 	@Override
 	protected void initActionBar() {
-		RelativeLayout rl = (RelativeLayout)findViewById(R.id.titleBar);
-		ViewGroup vg = (ViewGroup)LayoutInflater.from(mContext).inflate(R.layout.actionbar_new_record, null);
-		rl.addView(vg);
-		View backUp = rl.findViewById(R.id.backUp);
+
+		View backUp = findViewById(R.id.backUp);
 		backUp.setOnClickListener(this);
 
 		btnSaveRecord = (Button)findViewById(R.id.menu_save_Record);
 		btnSaveRecord.setOnClickListener(this);
 
-		menuTakePhoto = rl.findViewById(R.id.menu_take_photo);
+		menuTakePhoto = findViewById(R.id.menu_take_photo);
 		menuTakePhoto.setOnClickListener(this);
 	}
 	private void init(){

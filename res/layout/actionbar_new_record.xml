@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="50dip"
-    android:background="@drawable/mmtitle_bg_alpha"
+    android:background="@color/title"
     android:gravity="center_vertical" >
 
     <RelativeLayout
@@ -16,9 +16,8 @@
             android:layout_width="35dip"
             android:layout_height="35dip"
             android:layout_centerInParent="true"
-            android:src="@drawable/btn_back" />
+            android:src="@drawable/ic_action_back" />
     </RelativeLayout>
-
     <Button
         android:id="@+id/menu_save_Record"
         android:layout_width="wrap_content"
@@ -28,7 +27,7 @@
         android:background="@drawable/selector_actionbar_action"
         android:paddingLeft="3dp"
         android:paddingRight="3dp"
-        android:text="保存记录"
+        android:text="@string/save"
         android:textColor="@color/white" />
     
      <Button
