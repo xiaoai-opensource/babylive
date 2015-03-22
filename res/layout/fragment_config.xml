@@ -1,6 +1,108 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!-- 档案布局 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_common"
+    android:orientation="vertical"
+    >
+
+    <include layout="@layout/actionbar_config" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_group_divide_height" />
+    <include layout="@layout/common_divide_whole" />
+    <RelativeLayout
+        android:id="@+id/layoutProfile"
+        style="@style/profile_item"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height">
+
+        <TextView
+            style="@style/list_label_common"
+            android:layout_centerVertical="true"
+            android:text="@string/baby_profile" />
+
+        <TextView
+            android:id="@+id/name"
+            style="@style/profile_right_text"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/arrow_right_width" />
+
+        <ImageView
+            android:layout_width="@dimen/arrow_right_width"
+            android:layout_height="@dimen/arrow_right_height"
+            android:src="@drawable/icon_arrow_right"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            />
+
+    </RelativeLayout>
+    <include layout="@layout/common_divide_whole" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_group_divide_height" />
+
+
+    <include layout="@layout/common_divide_whole" />
+
+    <RelativeLayout
+        android:id="@+id/layoutCheckUpdate"
+        style="@style/profile_item"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/list_label_common"
+            android:layout_centerVertical="true"
+            android:text="@string/check_update" />
+
+        <TextView
+            style="@style/profile_right_text"
+            android:layout_centerVertical="true" />
+        <ImageView
+            android:layout_width="@dimen/arrow_right_width"
+            android:layout_height="@dimen/arrow_right_height"
+            android:src="@drawable/icon_arrow_right"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            />
+    </RelativeLayout>
+    <include layout="@layout/common_divide_whole" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_group_divide_height" />
+
+    <include layout="@layout/common_divide_whole" />
+    <RelativeLayout
+        android:id="@+id/layoutAbout"
+        style="@style/profile_item"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/list_label_common"
+            android:layout_centerVertical="true"
+            android:text="@string/about" />
+
+        <TextView
+            style="@style/profile_right_text"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/arrow_right_width"
+            />
+
+        <ImageView
+            android:layout_width="@dimen/arrow_right_width"
+            android:layout_height="@dimen/arrow_right_height"
+            android:src="@drawable/icon_arrow_right"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            />
+    </RelativeLayout>
+
+    <include layout="@layout/common_divide_whole" />
 
 </LinearLayout>

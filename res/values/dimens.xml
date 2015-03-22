@@ -28,5 +28,6 @@
     <dimen name="nav_add_note_width" >40dp</dimen>
 
     <dimen name="title_font_size" >20sp</dimen>
+    <dimen name="title_input_height">30dp</dimen>
 
 </resources>
