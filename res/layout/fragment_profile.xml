@@ -6,7 +6,7 @@
     android:orientation="vertical"
     >
 
-    <include layout="@layout/actionbar_profile" />
+    <include layout="@layout/actionbar_profile_edit" />
     <include layout="@layout/common_divide_whole" />
 
     <RelativeLayout
