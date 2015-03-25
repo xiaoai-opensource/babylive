@@ -22,5 +22,13 @@
     <string name="baby_profile">宝贝档案</string>
     <string name="check_update">检查更新</string>
     <string name="about">关于</string>
+    <string name="remind_write_name">请填写宝贝姓名</string>
+    <string name="remind_write_sex">请选择宝贝性别</string>
+    <string name="remind_write_birthday">请填写宝贝出生年月</string>
+    <string name="remind_write_birthTime">请填写宝贝出生时辰</string>
+    <string name="remind_write_birthweight">请填写宝贝出生重量</string>
+    <string name="remind_correct_weight">请填写正确的重量</string>
+    <string name="save_success">保存成功</string>
+    <string name="save_fail">保存失败</string>
 
 </resources>

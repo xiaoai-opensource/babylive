@@ -66,6 +66,7 @@ public class ConfigFragment extends Fragment implements OnClickListener {
      * */
    private void startFragment(int contentId,Fragment fragment){
        FragmentTransaction transaction = mFM.beginTransaction();
+       transaction.setCustomAnimations(R.anim.slide_in_from_right,R.anim.slide_out_to_left,0,android.R.anim.slide_out_right);
        transaction.replace(contentId, fragment);
        transaction.addToBackStack(null);
        transaction.commit();

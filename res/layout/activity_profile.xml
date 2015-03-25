@@ -49,15 +49,17 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_toRightOf="@id/tvSex"
+            android:id="@+id/sex"
             android:orientation="horizontal">
 
             <RadioButton
-                android:id="@+id/sex"
+                android:id="@+id/sexMale"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="男" />
 
             <RadioButton
+                android:id="@+id/sexFemale"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="女" />
@@ -81,13 +83,17 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/tvBirthday"
+            android:id="@+id/labelBirthday"
             style="@style/list_label_common"
             android:layout_centerVertical="true"
             android:text="@string/birthday" />
 
         <TextView
-            style="@style/profile_right_text"
+            android:layout_toRightOf="@id/labelBirthday"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:id="@+id/tvBirthday"
             android:layout_centerVertical="true" />
 
     </RelativeLayout>
@@ -102,12 +108,17 @@
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/labelBirthTime"
             style="@style/list_label_common"
             android:layout_centerVertical="true"
             android:text="@string/birthtime" />
 
         <TextView
-            style="@style/profile_right_text"
+            android:layout_toRightOf="@id/labelBirthTime"
+            android:id="@+id/tvBirthTime"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:gravity="center_vertical"
             android:layout_centerVertical="true" />
 
     </RelativeLayout>

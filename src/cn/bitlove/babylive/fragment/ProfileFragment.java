@@ -1,8 +1,11 @@
 package cn.bitlove.babylive.fragment;
 
 import cn.bitlove.babylive.R;
+import cn.bitlove.babylive.activity.ProfileActivity;
+import cn.bitlove.babylive.entity.Profile;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -20,6 +23,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
     RelativeLayout layoutBirthTime;
     RelativeLayout layoutBirthWeight;
     View vNote;
+    View btnEdit;
 
 
     @Override
@@ -47,7 +51,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         layoutBirthWeight.setOnClickListener(this);
         vNote = mView.findViewById(R.id.note);
 
-
+        btnEdit=mView.findViewById(R.id.btnEdit);
+        btnEdit.setOnClickListener(this);
     }
 
     @Override
@@ -55,6 +60,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         switch (v.getId()){
             case R.id.layoutName:
                 Toast.makeText(getActivity()," onClick ",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.btnEdit:
+                Intent intent = new Intent(ProfileFragment.this.getActivity(), ProfileActivity.class);
+                startActivity(intent);
                 break;
         }
     }

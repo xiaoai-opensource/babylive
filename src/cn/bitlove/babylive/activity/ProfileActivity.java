@@ -17,9 +17,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 /**
  * 宝贝档案表
@@ -31,7 +35,7 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
 	private TextView tvName = null;
 	private TextView tvBirthday = null;
 	private TextView tvBirthTime = null;
-	private TextView tvSex = null;
+	private RadioGroup sex = null;
 	private TextView tvWeight = null;
 	private TextView tvNote = null;
 	private DateTimeManager dtm = null;
@@ -44,92 +48,85 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
 	}
 	@Override
 	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.btnOK:
-			Profile profile = checkBeforeSave();
-			if(profile!=null){
-				saveProfile(profile);
-			}
-			break;
-		case R.id.btnCancel:
-			mActivity.finish();
-			break;
-		case R.id.birthTime:
-			dtm.showTimePick(new OnTimeSetListener() {
-				
-				@Override
-				public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-					String strTime = hourOfDay +":" + minute;
-					tvBirthTime.setText(strTime);
-				}
-			});
-			break;
-		case R.id.birthday:
-			DatePickerDialog dp = dtm.showDatePick(new OnDateSetListener() {
-				@Override
-				public void onDateSet(DatePicker view, int year, int monthOfYear,
-						int dayOfMonth) {
-					String strDate = year +"-" + monthOfYear +"-" + dayOfMonth;
-					tvBirthday.setText(strDate);
-				}
-			});
-			break;
-		default:
-			break;
-		}
+        switch (v.getId()){
+            case R.id.tvBirthday:
+                DateTimeManager.getInstance(mContext).showDatePick(new OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        String strDate = String.format("%d-%s-%s",year,Util.format(monthOfYear+1,2),Util.format(dayOfMonth,2));
+                        tvBirthday.setText(strDate);
+                    }
+                });
+                break;
+            case R.id.tvBirthTime:
+                DateTimeManager.getInstance(mContext).showTimePick(new OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        String strTime = String.format("%s:%s",Util.format(hourOfDay,2),Util.format(minute,2));
+                        tvBirthTime.setText(strTime);
+                    }
+                });
+                break;
+            case R.id.btnSave:
+                Profile profile = checkBeforeSave();
+                if(profile!=null){
+                    saveProfile(profile);
+                }
+                break;
+        }
 	}
 	private void init(){
 		mContext = this;
 		mSqLiteManager = SQLiteManager.getInstance(this);
+        btnOK = (Button) findViewById(R.id.btnSave);
+        btnOK.setOnClickListener(this);
 		dtm = DateTimeManager.getInstance(ProfileActivity.this);
-		btnOK = (Button)findViewById(R.id.btnOK);
-		btnOK.setOnClickListener(this);
-		btnCancel = (Button)findViewById(R.id.btnCancel);
-		btnCancel.setOnClickListener(this);
-		tvName = (TextView)findViewById(R.id.name);
-		tvSex = (TextView)findViewById(R.id.sex);
-		tvBirthday = (TextView)findViewById(R.id.birthday);
-		tvBirthday.setOnClickListener(this);
-		tvBirthTime = (TextView)findViewById(R.id.birthTime);
-		tvBirthTime.setOnClickListener(this);
+        sex = (RadioGroup) findViewById(R.id.sex);
+        tvName = (TextView)findViewById(R.id.name);
 		tvNote = (TextView)findViewById(R.id.note);
 		tvWeight = (TextView)findViewById(R.id.weight);
+        tvBirthday=(TextView)findViewById(R.id.tvBirthday);
+        tvBirthday.setOnClickListener(this);
+
+        tvBirthTime=(TextView)findViewById(R.id.tvBirthTime);
+        tvBirthTime.setOnClickListener(this);
 	}
 	private Profile checkBeforeSave(){
 		Profile profile  = new Profile();
 		String strName = tvName.getText().toString();
 		if("".equals(strName)){
-			ToastReminder.showToast(this, "请填写宝贝姓名", Toast.LENGTH_SHORT);
+			ToastReminder.showToast(this, getString(R.string.remind_write_name), Toast.LENGTH_SHORT);
 			return null;
 		}
 		profile.setName(strName);
 		
-		String strSex = tvSex.getText().toString();
-		if("".equals(strSex)){
-			ToastReminder.showToast(this, "请选择宝贝性别", Toast.LENGTH_SHORT);
+        int radioId = sex.getCheckedRadioButtonId();
+		if(radioId==-1){
+			ToastReminder.showToast(this, getString(R.string.remind_write_sex), Toast.LENGTH_SHORT);
 			return null;
 		}
-		profile.setSex(strSex);
+        RadioButton rb = (RadioButton) sex.findViewById(radioId);
+		profile.setSex(rb.getText().toString());
 		
 		String strBirthday = tvBirthday.getText().toString();
 		if("".equals(strBirthday)){
-			ToastReminder.showToast(this, "请填写宝贝出生年月", Toast.LENGTH_SHORT);
+			ToastReminder.showToast(this, getString(R.string.remind_write_birthday), Toast.LENGTH_SHORT);
 			return null;
 		}
 		profile.setBirthday(strBirthday);
 		
 		String strBirthTime = tvBirthTime.getText().toString();
 		if("".equals(strBirthTime)){
-			ToastReminder.showToast(this, "请填写宝贝出生时辰", Toast.LENGTH_SHORT);
+			ToastReminder.showToast(this, getString(R.string.remind_write_birthTime), Toast.LENGTH_SHORT);
 			return null;
 		}
 		profile.setBirthTime(strBirthTime);
 		
 		String strWeight = tvWeight.getText().toString();
 		if("".equals(strWeight)){
-			ToastReminder.showToast(this, "请填写宝贝出生重量", Toast.LENGTH_SHORT);
+			ToastReminder.showToast(this, getString(R.string.remind_write_birthweight), Toast.LENGTH_SHORT);
 			if(!Util.isNumber(strWeight)){
-				ToastReminder.showToast(this, "请填写正确的数量", Toast.LENGTH_SHORT);
+				ToastReminder.showToast(this, getString(R.string.remind_correct_weight), Toast.LENGTH_SHORT);
 				tvWeight.requestFocus();
 			}
 			return null;
@@ -144,9 +141,9 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
 	private void saveProfile(Profile profile){
 		long rowId = mSqLiteManager.saveProfile(profile);	
 		if(rowId>0){
-			ToastReminder.showToast(this, "保存成功", Toast.LENGTH_SHORT);
+			ToastReminder.showToast(this, getString(R.string.save_success), Toast.LENGTH_SHORT);
 		}else{
-			ToastReminder.showToast(this, "保存失败", Toast.LENGTH_SHORT);
+			ToastReminder.showToast(this, getString(R.string.save_fail), Toast.LENGTH_SHORT);
 			
 		}
 	}
