@@ -103,7 +103,7 @@ public class MainFragmentActivity extends BaseFragmentActivity implements OnClic
                     switchFragment(tagFragment);
                     break;
                 case R.id.layoutConfig:
-                    imageView.setImageResource(R.drawable.config_unfocus);
+                    imageView.setImageResource(R.drawable.config_focus);
                     switchFragment(configFragment);
 
                     break;
