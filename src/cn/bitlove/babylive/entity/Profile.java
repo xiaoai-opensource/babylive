@@ -1,7 +1,7 @@
 package cn.bitlove.babylive.entity;
 
 public class Profile {
-	private String id;
+	private long id;
 	private String name;
 	private String sex;
 	private String birthday;
@@ -44,10 +44,10 @@ public class Profile {
 	public void setBirthTime(String birthTime) {
 		this.birthTime = birthTime;
 	}
-	public String getId() {
+	public long getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 }

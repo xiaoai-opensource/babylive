@@ -1,13 +1,12 @@
 package cn.bitlove.babylive.activity;
 
+import cn.bitlove.babylive.data.ProfileData;
 import cn.bitlove.babylive.database.SQLiteManager;
 import cn.bitlove.babylive.entity.Profile;
 import cn.bitlove.babylive.util.DateTimeManager;
 import cn.bitlove.babylive.util.Util;
 import cn.bitlove.remind.ToastReminder;
-
 import cn.bitlove.babylive.R;
-
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.TimePickerDialog.OnTimeSetListener;
@@ -30,6 +29,7 @@ import org.w3c.dom.Text;
  * */
 public class ProfileActivity extends BaseActivity implements OnClickListener {
 	SQLiteManager mSqLiteManager=null;
+	private Profile mProfile = null;
 	private Button btnOK =null;
 	private Button btnCancel = null;
 	private TextView tvName = null;
@@ -90,15 +90,33 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
 
         tvBirthTime=(TextView)findViewById(R.id.tvBirthTime);
         tvBirthTime.setOnClickListener(this);
+        
+        Profile profile = getProfile();
+        if(profile!=null){
+        	tvName.setText(mProfile.getName());
+        	tvBirthday.setText(mProfile.getBirthday());
+        	tvBirthTime.setText(mProfile.getBirthTime());
+        	tvWeight.setText(String.valueOf(mProfile.getWeight()));
+        	tvNote.setText(mProfile.getNote());
+        	
+        	RadioButton rb1 = (RadioButton) sex.getChildAt(0);
+        	RadioButton rb2 = (RadioButton) sex.getChildAt(1);
+        	if(rb1.getText().equals(mProfile.getSex())){
+        		rb1.setChecked(true);
+        	}
+        	if(rb2.getText().equals(mProfile.getSex())){
+        		rb2.setChecked(true);
+        	}
+        	
+        }
 	}
 	private Profile checkBeforeSave(){
-		Profile profile  = new Profile();
 		String strName = tvName.getText().toString();
 		if("".equals(strName)){
 			ToastReminder.showToast(this, getString(R.string.remind_write_name), Toast.LENGTH_SHORT);
 			return null;
 		}
-		profile.setName(strName);
+		mProfile.setName(strName);
 		
         int radioId = sex.getCheckedRadioButtonId();
 		if(radioId==-1){
@@ -106,21 +124,21 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
 			return null;
 		}
         RadioButton rb = (RadioButton) sex.findViewById(radioId);
-		profile.setSex(rb.getText().toString());
+		mProfile.setSex(rb.getText().toString());
 		
 		String strBirthday = tvBirthday.getText().toString();
 		if("".equals(strBirthday)){
 			ToastReminder.showToast(this, getString(R.string.remind_write_birthday), Toast.LENGTH_SHORT);
 			return null;
 		}
-		profile.setBirthday(strBirthday);
+		mProfile.setBirthday(strBirthday);
 		
 		String strBirthTime = tvBirthTime.getText().toString();
 		if("".equals(strBirthTime)){
 			ToastReminder.showToast(this, getString(R.string.remind_write_birthTime), Toast.LENGTH_SHORT);
 			return null;
 		}
-		profile.setBirthTime(strBirthTime);
+		mProfile.setBirthTime(strBirthTime);
 		
 		String strWeight = tvWeight.getText().toString();
 		if("".equals(strWeight)){
@@ -131,13 +149,23 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
 			}
 			return null;
 		}
-		profile.setWeight(Float.parseFloat(strWeight));
+		mProfile.setWeight(Float.parseFloat(strWeight));
 		
 		String strNote = tvNote.getText().toString();
-		profile.setNote(strNote);
+		mProfile.setNote(strNote);
 		
-		return profile ;
+		return mProfile ;
 	}
+	/**
+     * 获取当前用户信息
+     * */
+    private Profile getProfile(){
+    	mProfile = ProfileData.queryProfile(this);
+    	return mProfile;
+    }
+    /**
+     * 保存档案
+     * */
 	private void saveProfile(Profile profile){
 		long rowId = mSqLiteManager.saveProfile(profile);	
 		if(rowId>0){

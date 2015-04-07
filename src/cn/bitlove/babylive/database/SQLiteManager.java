@@ -43,11 +43,6 @@ public class SQLiteManager {
 			cursor =  db.query(TABLE_PROFILE, null, null, null, null, null, "birthday");
 		}catch(Exception ex){
 
-		}finally{
-			if(db!=null){
-				db.close();
-				db = null;
-			}
 		}
 
 		return cursor;
@@ -89,6 +84,7 @@ public class SQLiteManager {
 	 * */
 	public long saveProfile(Profile profile){
 		long rowId=-1;
+		String whereArgs[] = {profile.getId()+""}; 
 		try{
 			ContentValues cv = new ContentValues();
 			cv.put("name", profile.getName());
@@ -99,7 +95,11 @@ public class SQLiteManager {
 			cv.put("note", profile.getNote());
 
 			db = getSqLiteDatabase(true);
-			rowId = db.insert(TABLE_PROFILE, null, cv);
+			if(profile.getId()>0){
+				rowId = db.update(TABLE_PROFILE, cv, "id=?", whereArgs);
+			}else{
+				rowId = db.insert(TABLE_PROFILE, null, cv);
+			}
 
 		}catch(Exception ex){
 		}finally{
@@ -282,13 +282,13 @@ public class SQLiteManager {
 		private void createProfileTable(SQLiteDatabase db){
 			StringBuilder sb = new StringBuilder();
 			sb.append("create table [" + TABLE_PROFILE + "](");
-			sb.append("[id] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,");
-			sb.append("[name] TEXT,");
-			sb.append("[sex] TEXT,");
-			sb.append("[birthday] TEXT,");
-			sb.append("[birthTime] TEXT,");
-			sb.append("[weight] float,");
-			sb.append("[note] TEXT)");
+			sb.append("["+ProfileTB.id +"] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,");
+			sb.append("["+ProfileTB.name +"] TEXT,");
+			sb.append("["+ProfileTB.sex +"] TEXT,");
+			sb.append("["+ProfileTB.birthday +"] TEXT,");
+			sb.append("["+ProfileTB.birthTime +"] TEXT,");
+			sb.append("["+ProfileTB.weight +"] float,");
+			sb.append("["+ProfileTB.note +"] TEXT)");
 			db.execSQL(sb.toString());
 		}
 		/**

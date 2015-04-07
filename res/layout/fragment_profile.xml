@@ -1,19 +1,20 @@
-<?xml version="1.0" encoding="utf-8"?><!-- 档案布局 -->
+<?xml version="1.0" encoding="utf-8"?>
+ <!-- 档案布局 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_common"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical" >
 
     <include layout="@layout/actionbar_profile" />
+
     <include layout="@layout/common_divide_whole" />
 
     <RelativeLayout
         android:id="@+id/layoutName"
         style="@style/profile_item"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_height">
+        android:layout_height="@dimen/item_height" >
 
         <TextView
             style="@style/list_label_common"
@@ -25,7 +26,6 @@
             style="@style/profile_right_text"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/arrow_right_width" />
-
     </RelativeLayout>
 
     <include layout="@layout/common_divide" />
@@ -35,7 +35,7 @@
         style="@style/profile_item"
         android:layout_width="match_parent"
         android:layout_height="@dimen/item_height"
-        android:orientation="horizontal">
+        android:orientation="horizontal" >
 
         <TextView
             style="@style/list_label_common"
@@ -43,16 +43,15 @@
             android:text="@string/sex" />
 
         <TextView
+            android:id="@+id/sex"
             style="@style/profile_right_text"
-            android:layout_centerVertical="true" />
-
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/arrow_right_width" />
     </RelativeLayout>
-
 
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/item_group_divide_height" />
-
 
     <include layout="@layout/common_divide_whole" />
 
@@ -61,7 +60,7 @@
         style="@style/profile_item"
         android:layout_width="match_parent"
         android:layout_height="@dimen/item_height"
-        android:orientation="horizontal">
+        android:orientation="horizontal" >
 
         <TextView
             style="@style/list_label_common"
@@ -69,9 +68,10 @@
             android:text="@string/birthday" />
 
         <TextView
+            android:id="@+id/birthday"
             style="@style/profile_right_text"
-            android:layout_centerVertical="true" />
-
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/arrow_right_width" />
     </RelativeLayout>
 
     <include layout="@layout/common_divide" />
@@ -81,7 +81,7 @@
         style="@style/profile_item"
         android:layout_width="match_parent"
         android:layout_height="@dimen/item_height"
-        android:orientation="horizontal">
+        android:orientation="horizontal" >
 
         <TextView
             style="@style/list_label_common"
@@ -89,9 +89,10 @@
             android:text="@string/birthtime" />
 
         <TextView
+            android:id="@+id/birthTime"
             style="@style/profile_right_text"
-            android:layout_centerVertical="true" />
-
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/arrow_right_width" />
     </RelativeLayout>
 
     <include layout="@layout/common_divide" />
@@ -101,7 +102,7 @@
         style="@style/profile_item"
         android:layout_width="match_parent"
         android:layout_height="@dimen/item_height"
-        android:orientation="horizontal">
+        android:orientation="horizontal" >
 
         <TextView
             style="@style/list_label_common"
@@ -109,10 +110,10 @@
             android:text="@string/birthWeight" />
 
         <TextView
+            android:id="@+id/birthWeight"
             style="@style/profile_right_text"
-            android:layout_centerVertical="true" />
-
-
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/arrow_right_width" />
     </RelativeLayout>
 
     <include layout="@layout/common_divide_whole" />
@@ -131,15 +132,14 @@
         style="@style/profile_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical" >
 
-        <EditText
+        <TextView
             android:id="@+id/note"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/no_border"
             android:gravity="top"
-            android:hint="@string/notHint"
             android:lines="5"
             android:paddingLeft="3dp" />
     </LinearLayout>

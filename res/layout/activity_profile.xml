@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_common"
-    android:orientation="vertical">
+    android:orientation="vertical" >
 
     <include layout="@layout/actionbar_profile_edit" />
 
@@ -12,7 +12,7 @@
     <RelativeLayout
         style="@style/profile_item"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_height">
+        android:layout_height="@dimen/item_height" >
 
         <TextView
             android:id="@+id/tvName"
@@ -25,10 +25,7 @@
             style="@style/profile_right_edittext"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_toRightOf="@id/tvName"
-
-            />
-
+            android:layout_toRightOf="@id/tvName" />
     </RelativeLayout>
 
     <include layout="@layout/common_divide" />
@@ -37,7 +34,7 @@
         style="@style/profile_item"
         android:layout_width="match_parent"
         android:layout_height="@dimen/item_height"
-        android:orientation="horizontal">
+        android:orientation="horizontal" >
 
         <TextView
             android:id="@+id/tvSex"
@@ -46,11 +43,11 @@
             android:text="@string/sex" />
 
         <RadioGroup
+            android:id="@+id/sex"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_toRightOf="@id/tvSex"
-            android:id="@+id/sex"
-            android:orientation="horizontal">
+            android:orientation="horizontal" >
 
             <RadioButton
                 android:id="@+id/sexMale"
@@ -64,7 +61,6 @@
                 android:layout_height="match_parent"
                 android:text="女" />
         </RadioGroup>
-
     </RelativeLayout>
 
     <include layout="@layout/common_divide_whole" />
@@ -73,14 +69,13 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/item_group_divide_height" />
 
-
     <include layout="@layout/common_divide_whole" />
 
     <RelativeLayout
         style="@style/profile_item"
         android:layout_width="match_parent"
         android:layout_height="@dimen/item_height"
-        android:orientation="horizontal">
+        android:orientation="horizontal" >
 
         <TextView
             android:id="@+id/labelBirthday"
@@ -89,13 +84,13 @@
             android:text="@string/birthday" />
 
         <TextView
-            android:layout_toRightOf="@id/labelBirthday"
+            android:id="@+id/tvBirthday"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:id="@+id/tvBirthday"
-            android:layout_centerVertical="true" />
-
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/item_value_padding_left"
+            android:layout_toRightOf="@id/labelBirthday"
+            android:gravity="center_vertical" />
     </RelativeLayout>
 
     <include layout="@layout/common_divide" />
@@ -105,7 +100,7 @@
         style="@style/profile_item"
         android:layout_width="match_parent"
         android:layout_height="@dimen/item_height"
-        android:orientation="horizontal">
+        android:orientation="horizontal" >
 
         <TextView
             android:id="@+id/labelBirthTime"
@@ -114,13 +109,13 @@
             android:text="@string/birthtime" />
 
         <TextView
-            android:layout_toRightOf="@id/labelBirthTime"
             android:id="@+id/tvBirthTime"
-            android:layout_height="match_parent"
             android:layout_width="match_parent"
-            android:gravity="center_vertical"
-            android:layout_centerVertical="true" />
-
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/item_value_padding_left"
+            android:layout_toRightOf="@id/labelBirthTime"
+            android:gravity="center_vertical" />
     </RelativeLayout>
 
     <include layout="@layout/common_divide" />
@@ -130,7 +125,7 @@
         style="@style/profile_item"
         android:layout_width="match_parent"
         android:layout_height="@dimen/item_height"
-        android:orientation="horizontal">
+        android:orientation="horizontal" >
 
         <TextView
             android:id="@+id/tvWeight"
@@ -145,8 +140,6 @@
             android:layout_height="match_parent"
             android:layout_toRightOf="@id/tvWeight"
             android:inputType="numberDecimal" />
-
-
     </RelativeLayout>
 
     <include layout="@layout/common_divide_whole" />
@@ -165,7 +158,7 @@
         style="@style/profile_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical" >
 
         <EditText
             android:id="@+id/note"
@@ -179,6 +172,5 @@
     </LinearLayout>
 
     <include layout="@layout/common_divide_whole" />
-
 
 </LinearLayout>
