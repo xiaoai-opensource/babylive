@@ -31,7 +31,6 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
 	SQLiteManager mSqLiteManager=null;
 	private Profile mProfile = null;
 	private Button btnOK =null;
-	private Button btnCancel = null;
 	private TextView tvName = null;
 	private TextView tvBirthday = null;
 	private TextView tvBirthTime = null;
@@ -116,6 +115,7 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
 			ToastReminder.showToast(this, getString(R.string.remind_write_name), Toast.LENGTH_SHORT);
 			return null;
 		}
+		
 		mProfile.setName(strName);
 		
         int radioId = sex.getCheckedRadioButtonId();
@@ -161,6 +161,9 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
      * */
     private Profile getProfile(){
     	mProfile = ProfileData.queryProfile(this);
+    	if(mProfile==null){
+    		mProfile = new Profile();
+    	}
     	return mProfile;
     }
     /**

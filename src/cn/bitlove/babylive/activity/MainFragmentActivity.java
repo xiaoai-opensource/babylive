@@ -1,15 +1,14 @@
 package cn.bitlove.babylive.activity;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +18,7 @@ import cn.bitlove.babylive.fragment.ConfigFragment;
 import cn.bitlove.babylive.fragment.ProfileFragment;
 import cn.bitlove.babylive.fragment.RecordListFragment;
 import cn.bitlove.babylive.fragment.TimeLineFragment;
+import cn.bitlove.remind.ToastReminder;
 
 public class MainFragmentActivity extends BaseFragmentActivity implements OnClickListener {
     View layoutRecords;
@@ -172,5 +172,19 @@ public class MainFragmentActivity extends BaseFragmentActivity implements OnClic
     public void onClick(View v) {
         super.onClick(v);
         changeNav(v);
+    }
+    
+    long lastTime=System.currentTimeMillis();
+    final long exitDifTime = 1000;		//两次退出时间间隔
+    @Override
+    public void onBackPressed() {
+    	//退出确认
+    	long curTime = System.currentTimeMillis();
+    	if((curTime - lastTime)>exitDifTime){
+    		lastTime = curTime;
+    		ToastReminder.showToast(this, "再次点击退出", Toast.LENGTH_LONG);
+    	}else{
+    		super.onBackPressed();
+    	}
     }
 }

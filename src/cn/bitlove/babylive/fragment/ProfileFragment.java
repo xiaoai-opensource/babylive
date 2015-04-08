@@ -10,7 +10,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class ProfileFragment extends Fragment implements View.OnClickListener{
@@ -34,6 +33,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         init();
 		return mView;
 	}
+    @Override
+    public void onResume() {
+    	super.onResume();
+    	init();
+    }
     /**
      * 初始化
      * */

@@ -18,7 +18,7 @@ public class ProfileData {
 		SQLiteManager manager = SQLiteManager.getInstance(context);
 		Cursor cursor = manager.queryProfiles();
 		try{
-			if(cursor!=null){
+			if(cursor.getCount()>0){
 				profile = new Profile();
 				cursor.moveToFirst();
 				profile.setId(cursor.getLong(cursor.getColumnIndex(ProfileTB.id)));

@@ -12,7 +12,7 @@ public class ToastReminder {
 	private static Handler mHandler;
 	private static void init(Context context){
 		if(mToast==null){
-			mToast = new Toast(context);
+			mToast = Toast.makeText(context, "", Toast.LENGTH_LONG);
 			mHandler = new Handler(context.getMainLooper());
 		}
 	}
@@ -25,7 +25,9 @@ public class ToastReminder {
 		mHandler.post(new Runnable() { 
 			@Override 
 			public void run() { 
-				mToast.makeText(context, text, duration).show();
+				mToast.setText(text);
+				mToast.setDuration(duration);
+				mToast.show();
 			} 
 		}); 
 
