@@ -178,6 +178,11 @@ public class MainFragmentActivity extends BaseFragmentActivity implements OnClic
     final long exitDifTime = 1000;		//两次退出时间间隔
     @Override
     public void onBackPressed() {
+    	if(mFM.getBackStackEntryCount()>0){
+    		super.onBackPressed();
+    		return;
+    	}
+    	
     	//退出确认
     	long curTime = System.currentTimeMillis();
     	if((curTime - lastTime)>exitDifTime){

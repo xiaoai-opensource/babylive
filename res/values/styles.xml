@@ -76,11 +76,11 @@
     </style>
 
     <style name="list_view_item_head">
-        <item name="android:textSize">8pt</item>
+        <item name="android:textSize">@dimen/font_size_big</item>
     </style>
 
     <style name="list_view_item_body">
-        <item name="android:textSize">6pt</item>
+        <item name="android:textSize">@dimen/font_size_common</item>
     </style>
 
 </resources>

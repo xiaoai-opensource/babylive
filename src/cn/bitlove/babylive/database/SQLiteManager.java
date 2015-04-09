@@ -96,7 +96,7 @@ public class SQLiteManager {
 
 			db = getSqLiteDatabase(true);
 			if(profile.getId()>0){
-				rowId = db.update(TABLE_PROFILE, cv, "id=?", whereArgs);
+				rowId = db.update(TABLE_PROFILE, cv, "_id=?", whereArgs);
 			}else{
 				rowId = db.insert(TABLE_PROFILE, null, cv);
 			}
@@ -128,6 +128,10 @@ public class SQLiteManager {
 
 			db = getSqLiteDatabase(true);
 			rowId = db.insert(TABLE_RECORD, null, cv);
+			
+			Cursor c = db.rawQuery("SELECT last_insert_rowid()", null);
+			c.moveToFirst();
+			rowId = c.getLong(0);
 
 		}catch(Exception ex){
 			ex.printStackTrace();
@@ -149,9 +153,10 @@ public class SQLiteManager {
 			ContentValues cv = new ContentValues();
 			cv.put("actionDate",record.getActionDate());
 			cv.put("content",record.getContent());
+			cv.put("title",record.getTitle());
 			String whereArgs[] = {record.getId()+""}; 
 			db = getSqLiteDatabase(true);
-			rowId = db.update(TABLE_RECORD, cv, "id=?", whereArgs);
+			rowId = db.update(TABLE_RECORD, cv, "_id=?", whereArgs);
 		}finally{
 			if(db!=null){
 				db.close();
@@ -168,7 +173,7 @@ public class SQLiteManager {
 		int rowNum=-1;
 		try{
 			db = getSqLiteDatabase(true);
-			rowNum = db.delete(TABLE_RECORD, "id=?", whereArgs);
+			rowNum = db.delete(TABLE_RECORD, "_id=?", whereArgs);
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}finally{
@@ -208,6 +213,21 @@ public class SQLiteManager {
 			cursor = db.rawQuery(sql,null);
 		}catch(Exception ex){
 
+		}
+		return cursor;
+	}
+	/**
+	 * 根据rowId查询记录
+	 * @param rowId 表中记录行数
+	 * */
+	public Cursor queryRecordByRowId(long rowId){
+		Cursor  cursor =null;
+		try{
+			db = getSqLiteDatabase(false);
+			String sql = String.format("select * from record");
+			cursor = db.rawQuery(sql,null);
+		}catch(Exception ex){
+			ex.printStackTrace();
 		}
 		return cursor;
 	}

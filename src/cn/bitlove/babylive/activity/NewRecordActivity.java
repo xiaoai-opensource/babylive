@@ -111,8 +111,8 @@ public class NewRecordActivity extends BaseActivity implements OnClickListener {
 				ToastReminder.showToast(mContext, "更新失败", Toast.LENGTH_LONG);
 			}
 		}else{
-			long rowId = rd.saveRecord(mRecord);
-			if(rowId>0){
+			recordId = rd.saveRecord(mRecord);
+			if(recordId>0){
 				ToastReminder.showToast(mContext, "保存成功", Toast.LENGTH_LONG);
 			}else{
 				ToastReminder.showToast(mContext, "保存失败", Toast.LENGTH_LONG);

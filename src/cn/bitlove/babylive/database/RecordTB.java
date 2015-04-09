@@ -3,7 +3,7 @@ package cn.bitlove.babylive.database;
  * 记录表，字段映射
  * */
 public class RecordTB {
-	final public static String id="id";
+	final public static String id="_id";
 	//用户名称
 	final public static String userName="userName";
 	//发生时间

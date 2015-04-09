@@ -21,6 +21,20 @@ public class RecordData {
 		return mRecordData;
 	}
 	/**
+	 * 将数据库Cursor转换为Record对象
+	 * */
+	public Record fromCursor(Cursor cursor){
+		Record record = new Record();
+		record.setUserName(cursor.getString(cursor.getColumnIndex("userName")));
+		record.setActionDate(cursor.getString(cursor.getColumnIndex("actionDate")));
+		record.setCreateDate(cursor.getString(cursor.getColumnIndex("createDate")));
+		record.setContent(cursor.getString(cursor.getColumnIndex("content")));
+		record.setTitle(cursor.getString(cursor.getColumnIndex("title")));
+		record.setId(cursor.getLong(cursor.getColumnIndex("_id")));
+
+		return record;
+	}
+	/**
 	 * 查询所有的记录
 	 * */
 	public ArrayList<Record> queryAllRecords(){
@@ -30,14 +44,7 @@ public class RecordData {
 			if(cursor!=null && cursor.getCount()!=0){
 				cursor.moveToFirst();
 				while(!cursor.isAfterLast()){
-					Record record = new Record();
-					record.setUserName(cursor.getString(cursor.getColumnIndex("userName")));
-					record.setActionDate(cursor.getString(cursor.getColumnIndex("actionDate")));
-					record.setCreateDate(cursor.getString(cursor.getColumnIndex("createDate")));
-					record.setContent(cursor.getString(cursor.getColumnIndex("content")));
-					record.setTitle(cursor.getString(cursor.getColumnIndex("title")));
-					record.setId(cursor.getLong(cursor.getColumnIndex("id")));
-
+					Record record = fromCursor(cursor);
 					arrRecord.add(record);				
 					cursor.moveToNext();
 				}
@@ -64,14 +71,7 @@ public class RecordData {
 			if(cursor!=null && cursor.getCount()!=0){
 				cursor.moveToFirst();
 				while(!cursor.isAfterLast()){
-					Record record = new Record();
-					record.setUserName(cursor.getString(cursor.getColumnIndex("userName")));
-					record.setActionDate(cursor.getString(cursor.getColumnIndex("actionDate")));
-					record.setCreateDate(cursor.getString(cursor.getColumnIndex("createDate")));
-					record.setContent(cursor.getString(cursor.getColumnIndex("content")));
-					record.setTitle(cursor.getString(cursor.getColumnIndex("title")));
-					record.setId(cursor.getLong(cursor.getColumnIndex("id")));
-
+					Record record = fromCursor(cursor);
 					arrRecord.add(record);				
 					cursor.moveToNext();
 				}
@@ -125,14 +125,7 @@ public class RecordData {
 			if(cursor!=null){
 				cursor.moveToFirst();
 				while(!cursor.isAfterLast()){
-					Record record = new Record();
-					record.setUserName(cursor.getString(cursor.getColumnIndex("userName")));
-					record.setActionDate(cursor.getString(cursor.getColumnIndex("actionDate")));
-					record.setCreateDate(cursor.getString(cursor.getColumnIndex("createDate")));
-					record.setContent(cursor.getString(cursor.getColumnIndex("content")));
-					record.setTitle(cursor.getString(cursor.getColumnIndex("title")));
-					record.setId(cursor.getLong(cursor.getColumnIndex("id")));
-
+					Record record = fromCursor(cursor);
 					arrRecord.add(record);				
 					cursor.moveToNext();
 				}
@@ -147,6 +140,25 @@ public class RecordData {
 		}
 		
 		return arrRecord;
+	}
+	/**
+	 * 根据RowId查询记录
+	 * */
+	public Record queryRecordByRowId(long rowId){
+		Record record = null;
+		Cursor cursor = null;
+		try{
+			cursor = mSqlManager.queryRecordByRowId(rowId);
+			record = fromCursor(cursor);
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}finally{
+			if(cursor!=null){
+				cursor.close();
+				cursor=null;
+			}
+		}
+		return record;
 	}
 	/**
 	 * 保存一条记录
