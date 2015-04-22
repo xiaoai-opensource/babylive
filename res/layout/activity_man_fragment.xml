@@ -5,13 +5,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <fragment
+    <FrameLayout
         android:id="@+id/contentFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:name="cn.bitlove.babylive.fragment.RecordListFragment"
-        />
+        android:layout_weight="1" />
 
     <include layout="@layout/common_nav" />
 

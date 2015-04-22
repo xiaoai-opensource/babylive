@@ -1,7 +1,5 @@
 package cn.bitlove.babylive.activity;
 
-import cn.bitlove.babylive.R;
-import cn.bitlove.babylive.util.ManageActivity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -10,9 +8,9 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
-import android.widget.RelativeLayout;
+import cn.bitlove.babylive.R;
+import cn.bitlove.babylive.util.ManageActivity;
 
 /**
  * Fragment类基类

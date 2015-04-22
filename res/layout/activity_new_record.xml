@@ -14,7 +14,8 @@
             android:id="@+id/title"
             android:background="@drawable/no_border"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/title_input_height"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/title_input_height"
             android:hint="@string/click_title" />
 
         <include layout="@layout/common_divide_whole"

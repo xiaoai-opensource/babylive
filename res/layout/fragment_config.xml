@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/background_common"
     android:orientation="vertical"
+    android:clickable="true"
     >
 
     <include layout="@layout/actionbar_config" />

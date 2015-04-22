@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -62,6 +63,8 @@ public class MainFragmentActivity extends BaseFragmentActivity implements OnClic
         categoryFrament = new TimeLineFragment();
         tagFragment = new ProfileFragment();
         configFragment = new ConfigFragment();
+        
+        switchFragment(recordFragment);
     }
 
     /**
