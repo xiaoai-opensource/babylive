@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import android.content.Context;
+import android.text.Html;
+import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,7 +57,6 @@ public class CategoryListAdapter extends BaseAdapter {
 			vh = new ViewHolder();
 			convertView = mInflater.inflate(R.layout.category_item, parent, false);
 			vh.tvCate = (TextView) convertView.findViewById(R.id.tvCate);
-			vh.tvTitle = (TextView) convertView.findViewById(R.id.tvTitle);
 			vh.tvContent = (TextView) convertView.findViewById(R.id.tvContent);
 			vh.layoutCate = convertView.findViewById(R.id.layoutCate);
 			if(!mLastCate.equals(cate)){
@@ -74,9 +75,15 @@ public class CategoryListAdapter extends BaseAdapter {
 			vh.tvCate.setText(cate);
 			vh.layoutCate.setVisibility(View.VISIBLE);
 		}
+		StringBuilder contentSB = new StringBuilder();
+		contentSB.append("<b>");
+		contentSB.append(record.getTitle());
+		contentSB.append("</b>");
+		contentSB.append("<br>");
+		contentSB.append(record.getContent());
 		
-		vh.tvTitle.setText(record.getTitle());
-		vh.tvContent.setText(record.getContent());
+		Spanned content = Html.fromHtml(contentSB.toString());
+		vh.tvContent.setText(content);
 		
 		return convertView;
 	}
@@ -84,7 +91,6 @@ public class CategoryListAdapter extends BaseAdapter {
 	class ViewHolder{
 		public View layoutCate;
 		public TextView tvCate;
-		public TextView tvTitle;
 		public TextView tvContent;
 	}
 
