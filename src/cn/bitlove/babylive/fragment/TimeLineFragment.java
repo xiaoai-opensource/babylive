@@ -3,14 +3,19 @@ package cn.bitlove.babylive.fragment;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.AdapterView.OnItemClickListener;
 import cn.bitlove.babylive.R;
+import cn.bitlove.babylive.activity.NewRecordActivity;
 import cn.bitlove.babylive.data.RecordData;
 import cn.bitlove.babylive.entity.Record;
 import cn.bitlove.babylive.widget.CategoryListAdapter;
@@ -19,6 +24,7 @@ import cn.bitlove.babylive.widget.CategoryListAdapter;
  * */
 public class TimeLineFragment extends Fragment {
 	private Context mContext;
+	private Activity mActivity;
 	private View mView;		//自身界面
 	private ListView mTimeLine;	//时间轴
 	private ArrayList<Record> itemArr;
@@ -33,7 +39,8 @@ public class TimeLineFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		mContext = getActivity().getBaseContext();
+		mContext = getActivity();
+		mActivity = getActivity();
 		itemArr = initData();
 
 		if(mAdapter==null){
@@ -70,5 +77,21 @@ public class TimeLineFragment extends Fragment {
 	 */
 	public void initTimeLine(){
 		mTimeLine.setAdapter(mAdapter);
+		/**
+		 * 条目点击事件
+		 * */
+		mTimeLine.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+
+				Record record = (Record) mTimeLine.getItemAtPosition(mTimeLine.getFirstVisiblePosition()+position);
+				Intent intent = new Intent(mContext,NewRecordActivity.class);
+				Bundle bundle = new Bundle();
+				bundle.putSerializable("record", record);
+				intent.putExtras(bundle);
+				mActivity.startActivity(intent);
+			}
+		});
 	}
 }

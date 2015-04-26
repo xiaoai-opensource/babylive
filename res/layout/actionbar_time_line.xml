@@ -9,10 +9,10 @@
 
     <Button
         android:id="@+id/btnSave"
-        android:background="@drawable/abs__ic_menu_moreoverflow_normal_holo_light"
+        android:background="@drawable/abc_ic_menu_moreoverflow_mtrl_alpha2"
         android:textColor="@color/white"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_alignParentRight="true"
         />
 

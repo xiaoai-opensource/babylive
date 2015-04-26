@@ -9,6 +9,7 @@
 
     <include layout="@layout/actionbar_time_line" />
     <ListView
+        android:listSelector="#00000000"
         android:id="@+id/timeLine"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
