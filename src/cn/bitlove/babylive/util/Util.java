@@ -29,9 +29,12 @@ public class Util {
 	 * 隐藏键盘
 	 * */
 	public static void hideKeyboard(Context context,View view){
-		InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
-
-		imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+		try{
+			InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
+			imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
 	}
     /**
      * 格式化指定整数位数

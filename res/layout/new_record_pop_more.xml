@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#dd3086f2"
+    android:orientation="vertical"
+    >
+
+     <TextView
+        android:id="@+id/popactionTakePhoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/font_size_big"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
+        android:text="@string/take_photo"
+        android:textColor="@color/white" />
+    
+    <View 
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_margin="4dp"
+        android:background="@color/divide_common"
+        />
+
+    <TextView
+        android:id="@+id/popActionTag"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_margin="2dp"
+        android:text="@string/tag"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_size_big" />
+
+</LinearLayout>

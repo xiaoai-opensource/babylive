@@ -30,5 +30,9 @@
     <string name="remind_correct_weight">请填写正确的重量</string>
     <string name="save_success">保存成功</string>
     <string name="save_fail">保存失败</string>
+    <string name="take_photo">拍照</string>
+    <string name="tag">标签</string>
+    <string name="cancel">取消</string>
+    <string name="ok">确认</string>
 
 </resources>

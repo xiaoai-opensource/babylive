@@ -4,17 +4,12 @@
     android:layout_height="50dip"
     android:background="@color/title"
     android:gravity="center_vertical" >
-
-
-
     <Button
-        android:id="@+id/btnSave"
+        android:id="@+id/view_more"
         android:background="@drawable/abc_ic_menu_moreoverflow_mtrl_alpha2"
         android:textColor="@color/white"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_alignParentRight="true"
         />
-
-
 </RelativeLayout>

@@ -120,7 +120,7 @@ public class RecordListFragment extends Fragment{
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 
-				Record record = (Record) recordList.getItemAtPosition(recordList.getFirstVisiblePosition()+position);
+				Record record = (Record) recordList.getItemAtPosition(position);
 				Intent intent = new Intent(mContext,NewRecordActivity.class);
 				Bundle bundle = new Bundle();
 				bundle.putSerializable("record", record);

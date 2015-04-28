@@ -23,6 +23,7 @@ public class CategoryListAdapter extends BaseAdapter {
 
 	LayoutInflater mInflater;
 	CateType mCateType = CateType.MONTH;		//分类类别
+
 	List<Record> mRecords = new ArrayList<Record>();
 	//显示标题的位置
 	public HashMap<Integer, Object> mCatePositions=new HashMap<Integer, Object>();
@@ -119,6 +120,18 @@ public class CategoryListAdapter extends BaseAdapter {
 		}
 		
 		return afterFormat;
+	}
+	
+	public CateType getCateType() {
+		return mCateType;
+	}
+
+	public void setCateType(CateType mCateType) {
+		if(this.mCateType != mCateType){
+			this.mCateType = mCateType;
+			mCatePositions.clear();
+			calCateInfo();
+		}
 	}
 	
 	/**

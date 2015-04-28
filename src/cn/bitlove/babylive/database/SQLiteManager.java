@@ -22,6 +22,7 @@ public class SQLiteManager {
 	private final String TABLE_PROFILE="profile";		//当前表
 	private final String TABLE_RECORD="record";			//记录表
 	private final String TABLE_RECORD_META="record_meta";	//记录表
+	private final String TABLE_TAG="tag";	//记录表
 
 	private SQLiteManager(){};
 	public static SQLiteManager mSqLiteManager;
@@ -328,6 +329,18 @@ public class SQLiteManager {
 			db.execSQL(sb.toString());
 		}
 		/**
+		 * 创建Tag表
+		 */
+		private void createTagTable(SQLiteDatabase db){
+			StringBuilder sb = new StringBuilder();
+
+			sb.append("create table [" + TABLE_TAG + "](");
+			sb.append("["+TagTB.id+"] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,");
+			sb.append("["+TagTB.recordId+"] INTEGER,");
+			sb.append("["+TagTB.tagName+"] TEXT,");
+			db.execSQL(sb.toString());
+		}
+		/**
 		 * 创建记录中的资源表
 		 * */
 		private void createRecordMetaTable(SQLiteDatabase db){
@@ -345,6 +358,7 @@ public class SQLiteManager {
 			createProfileTable(db);
 			createRecordTable(db);
 			createRecordMetaTable(db);
+			createTagTable(db);
 		}
 
 		@Override

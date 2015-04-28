@@ -18,28 +18,26 @@
             android:layout_centerInParent="true"
             android:src="@drawable/ic_action_back" />
     </RelativeLayout>
+   <Button
+        android:id="@+id/view_more"
+        android:background="@drawable/abc_ic_menu_moreoverflow_mtrl_alpha2"
+        android:textColor="@color/white"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        />
+    
     <Button
         android:id="@+id/menu_save_Record"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@id/view_more"
         android:background="@drawable/selector_actionbar_action"
         android:paddingLeft="3dp"
         android:paddingRight="3dp"
         android:text="@string/save"
         android:textColor="@color/white" />
-    
-     <Button
-        android:id="@+id/menu_take_photo"
-        android:layout_toLeftOf="@id/menu_save_Record"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:background="@drawable/selector_actionbar_action"
-        android:paddingLeft="3dp"
-        android:paddingRight="3dp"
-        android:text="插入图片"
-        android:textColor="@color/white" />
-
+     
 </RelativeLayout>
