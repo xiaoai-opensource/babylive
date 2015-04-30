@@ -3,6 +3,7 @@ package cn.bitlove.babylive.database;
 import cn.bitlove.babylive.entity.Profile;
 import cn.bitlove.babylive.entity.Record;
 import cn.bitlove.babylive.entity.RecordMeta;
+import cn.bitlove.babylive.entity.Tag;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -25,7 +26,7 @@ public class SQLiteManager {
 	private final String TABLE_TAG="tag";	//记录表
 
 	private SQLiteManager(){};
-	public static SQLiteManager mSqLiteManager;
+	private static SQLiteManager mSqLiteManager;
 	public static SQLiteManager getInstance(Context context) {
 		if(mSqLiteManager==null){
 			mSqLiteManager = new SQLiteManager();
@@ -258,7 +259,67 @@ public class SQLiteManager {
 
 		return rowId;
 	}
+	/**
+	 * 保存Tag
+	 * @param tag
+	 * @return
+	 */
+	public boolean saveTag(Tag tag){
+		long rowId = -1;
 
+		try{
+			ContentValues cv = new ContentValues();
+			cv.put(TagTB.recordId,tag.getRecordId());
+			cv.put(TagTB.tagName,tag.getTagName());
+
+			db = getSqLiteDatabase(true);
+			rowId = db.insert(TABLE_TAG, null, cv);
+
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}finally{
+			if(db!=null){
+				db.close();
+				db = null;
+			}
+		}
+
+		if(rowId>-1){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
+    /**
+     * 查询tag
+     * @param recordId
+     * @return
+     */
+    public Cursor getTags(String recordId){
+        Cursor  cursor =null;
+        try{
+            db = getSqLiteDatabase(false);
+            String sql = String.format("select * from %s where %s = %s", TABLE_TAG,TagTB.recordId,recordId);
+            cursor = db.rawQuery(sql,null);
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+        return cursor;
+    }
+    /**
+     * 删除指定记录的所有tag
+     * @param recordId
+     */
+    public void removeAllTags(String recordId){
+        try{
+            db = getSqLiteDatabase(false);
+            String[] args = {recordId};
+            db.delete(TABLE_TAG, TagTB.recordId +"=?", args);
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+    }
 	/**
 	 * 回收数据库
 	 * */
@@ -337,7 +398,7 @@ public class SQLiteManager {
 			sb.append("create table [" + TABLE_TAG + "](");
 			sb.append("["+TagTB.id+"] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,");
 			sb.append("["+TagTB.recordId+"] INTEGER,");
-			sb.append("["+TagTB.tagName+"] TEXT,");
+			sb.append("["+TagTB.tagName+"] TEXT)");
 			db.execSQL(sb.toString());
 		}
 		/**

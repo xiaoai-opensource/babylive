@@ -125,7 +125,7 @@ public class TimeLineFragment extends Fragment {
 				
 				actionMonth.setOnClickListener(listItemListener);
 				actionYear.setOnClickListener(listItemListener);
-				pMoreWindow = new PopupWindow(content,200,100);
+				pMoreWindow = new PopupWindow(content,200,200);
 			}
 			
 			if(pMoreWindow.isShowing()){

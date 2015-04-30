@@ -4,7 +4,9 @@ import java.util.Calendar;
 
 import cn.bitlove.babylive.data.RecordData;
 import cn.bitlove.babylive.data.RecordMetaData;
+import cn.bitlove.babylive.data.TagData;
 import cn.bitlove.babylive.entity.Record;
+import cn.bitlove.babylive.entity.Tag;
 import cn.bitlove.babylive.fragment.TagFragment;
 import cn.bitlove.babylive.util.DateTimeManager;
 import cn.bitlove.babylive.util.FileUtil;
@@ -111,7 +113,7 @@ public class NewRecordActivity extends BaseFragmentActivity implements OnClickLi
 	/**
 	 * 保存记录
 	 * */
-	private void saveRecord(){
+	private boolean saveRecord(){
 		if(mRecord==null){
 			mRecord = new Record();
 		}
@@ -129,15 +131,19 @@ public class NewRecordActivity extends BaseFragmentActivity implements OnClickLi
 			long rowId = rd.updateRecord(mRecord);
 			if(rowId>0){
 				ToastReminder.showToast(mContext, "更新成功", Toast.LENGTH_LONG);
+				return true;
 			}else{
 				ToastReminder.showToast(mContext, "更新失败", Toast.LENGTH_LONG);
+				return false;
 			}
 		}else{
 			recordId = rd.saveRecord(mRecord);
 			if(recordId>0){
 				ToastReminder.showToast(mContext, "保存成功", Toast.LENGTH_LONG);
+				return true;
 			}else{
 				ToastReminder.showToast(mContext, "保存失败", Toast.LENGTH_LONG);
+				return false;
 			}
 		}
 	}
@@ -197,12 +203,47 @@ public class NewRecordActivity extends BaseFragmentActivity implements OnClickLi
 	private void modifyTag(){
 		mTagFragment = new TagFragment(null,okListener);
 		mTagFragment.show(getSupportFragmentManager(), "tag");
+        String tags = TagData.getTags(mContext,String.valueOf(recordId));
+        mTagFragment.setmIDialog(new TagFragment.IDialog() {
+            @Override
+            public void onShowConetent() {
+                String tags = TagData.getTags(mContext,String.valueOf(recordId));
+                mTagFragment.setTags(tags);
+            }
+        });
+
+	}
+	/**
+	 * 保存Tag
+	 * @param tags
+	 */
+	private boolean saveTag(String tags){
+		boolean result = true;
+		if(tags ==null || "".equals(tags.trim()))	return false;
+		String[] tagArr = tags.replace("，",",").split(",");
+		if(recordId<0){
+			if(!saveRecord()) return false;
+		}
+		
+		TagData.removeAllTag(mContext, String.valueOf(recordId));
+		for(int i=0;i<tagArr.length;i++){
+			Tag tag = new Tag();
+			tag.setRecordId(recordId);
+			tag.setTagName(tagArr[i]);
+			boolean saveResult = TagData.saveTag(mContext, tag);
+			if(saveResult==false){
+				result = false;
+				break;
+			}
+		}
+		
+		return result;
 	}
 	DialogInterface.OnClickListener okListener = new DialogInterface.OnClickListener(){
 		@Override
 		public void onClick(DialogInterface dialog, int which) {
 			String etTags = mTagFragment.getTags();
-			ToastReminder.showToast(mContext, etTags, Toast.LENGTH_SHORT);
+			saveTag(etTags);
 		}
 	};
 	/**
@@ -262,7 +303,7 @@ public class NewRecordActivity extends BaseFragmentActivity implements OnClickLi
 				
 				actionTakePhoto.setOnClickListener(listItemListener);
 				actionTag.setOnClickListener(listItemListener);
-				mPopWindow = new PopupWindow(content,200,100);
+				mPopWindow = new PopupWindow(content,200,200);
 			}
 			
 			if(mPopWindow.isShowing()){
