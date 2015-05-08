@@ -58,6 +58,33 @@ public class RecordData {
 		}
 		return arrRecord;
 	}
+	
+	/**
+	 * 根据tag查询record
+	 * @param tag
+	 * @return
+	 */
+	public ArrayList<Record> queryRecordsByTag(String tag){
+		ArrayList<Record> arrRecord = new ArrayList<Record>();
+		Cursor cursor = mSqlManager.queryRecordsByTag(tag);
+		try{
+			if(cursor!=null && cursor.getCount()!=0){
+				cursor.moveToFirst();
+				while(!cursor.isAfterLast()){
+					Record record = fromCursor(cursor);
+					arrRecord.add(record);				
+					cursor.moveToNext();
+				}
+			}
+		}finally{
+			if(cursor!=null){
+				cursor.close();
+				cursor =null;
+			}
+			mSqlManager.recyle();
+		}
+		return arrRecord;
+	}
 	/**
 	 * 从指定位置读取指定条数的记录
 	 * @param begin 记录起始位置

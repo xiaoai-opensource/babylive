@@ -130,7 +130,7 @@ public class SQLiteManager {
 
 			db = getSqLiteDatabase(true);
 			rowId = db.insert(TABLE_RECORD, null, cv);
-			
+
 			Cursor c = db.rawQuery("SELECT last_insert_rowid()", null);
 			c.moveToFirst();
 			rowId = c.getLong(0);
@@ -198,6 +198,22 @@ public class SQLiteManager {
 			cursor = db.query(TABLE_RECORD, null, null, null, null, null, RecordTB.actionDate +" desc");
 		}catch(Exception ex){
 
+		}
+		return cursor;
+	}
+	/**
+	 * 根据tag查询对应的记录
+	 * @param tag
+	 * @return
+	 */
+	public Cursor queryRecordsByTag(String tag){
+		Cursor  cursor =null;
+		try{
+			db = getSqLiteDatabase(false);
+			String sql = String.format("select * from record join tag on record._id = tag.recordId where tagName=%s", tag);
+			cursor = db.rawQuery(sql, null);
+		}catch(Exception ex){
+			ex.printStackTrace();
 		}
 		return cursor;
 	}
@@ -291,35 +307,50 @@ public class SQLiteManager {
 		}
 	}
 
-    /**
-     * 查询tag
-     * @param recordId
-     * @return
-     */
-    public Cursor getTags(String recordId){
-        Cursor  cursor =null;
-        try{
-            db = getSqLiteDatabase(false);
-            String sql = String.format("select * from %s where %s = %s", TABLE_TAG,TagTB.recordId,recordId);
-            cursor = db.rawQuery(sql,null);
-        }catch(Exception ex){
-            ex.printStackTrace();
-        }
-        return cursor;
-    }
-    /**
-     * 删除指定记录的所有tag
-     * @param recordId
-     */
-    public void removeAllTags(String recordId){
-        try{
-            db = getSqLiteDatabase(false);
-            String[] args = {recordId};
-            db.delete(TABLE_TAG, TagTB.recordId +"=?", args);
-        }catch(Exception ex){
-            ex.printStackTrace();
-        }
-    }
+	/**
+	 * 查询tag
+	 * @param recordId
+	 * @return
+	 */
+	public Cursor getTags(String recordId){
+		Cursor  cursor =null;
+		try{
+			db = getSqLiteDatabase(false);
+			String sql = String.format("select * from %s where %s = %s", TABLE_TAG,TagTB.recordId,recordId);
+			cursor = db.rawQuery(sql,null);
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+		return cursor;
+	}
+	/**
+	 * 统计tag使用情况
+	 * @return
+	 */
+	public Cursor totalTagCate(){
+		Cursor  cursor =null;
+		try{
+			db = getSqLiteDatabase(false);
+			String sql = String.format("select tagName,count(tagName) from %s group by tagName order by 2 desc;", TABLE_TAG);
+			cursor = db.rawQuery(sql,null);
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+		return cursor;
+	}
+	/**
+	 * 删除指定记录的所有tag
+	 * @param recordId
+	 */
+	public void removeAllTags(String recordId){
+		try{
+			db = getSqLiteDatabase(false);
+			String[] args = {recordId};
+			db.delete(TABLE_TAG, TagTB.recordId +"=?", args);
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
 	/**
 	 * 回收数据库
 	 * */

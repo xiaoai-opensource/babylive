@@ -2,43 +2,40 @@ package cn.bitlove.babylive.activity;
 
 import java.util.Calendar;
 
-import cn.bitlove.babylive.data.RecordData;
-import cn.bitlove.babylive.data.RecordMetaData;
-import cn.bitlove.babylive.data.TagData;
-import cn.bitlove.babylive.entity.Record;
-import cn.bitlove.babylive.entity.Tag;
-import cn.bitlove.babylive.fragment.TagFragment;
-import cn.bitlove.babylive.util.DateTimeManager;
-import cn.bitlove.babylive.util.FileUtil;
-import cn.bitlove.babylive.util.RecordMetaUtil;
-import cn.bitlove.babylive.util.Util;
-import cn.bitlove.babylive.widget.CategoryListAdapter.CateType;
-import cn.bitlove.remind.ToastReminder;
-import cn.bitlove.babylive.R;
-import cn.bitlove.babylive.SeflConstants;
 import android.app.DatePickerDialog.OnDateSetListener;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.format.DateFormat;
 import android.text.style.ImageSpan;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
+import cn.bitlove.babylive.R;
+import cn.bitlove.babylive.SeflConstants;
+import cn.bitlove.babylive.data.RecordData;
+import cn.bitlove.babylive.data.RecordMetaData;
+import cn.bitlove.babylive.data.TagData;
+import cn.bitlove.babylive.entity.Record;
+import cn.bitlove.babylive.entity.Tag;
+import cn.bitlove.babylive.fragment.TagDialogFragment;
+import cn.bitlove.babylive.util.DateTimeManager;
+import cn.bitlove.babylive.util.FileUtil;
+import cn.bitlove.babylive.util.RecordMetaUtil;
+import cn.bitlove.babylive.util.Util;
+import cn.bitlove.remind.ToastReminder;
 
 public class NewRecordActivity extends BaseFragmentActivity implements OnClickListener {
 	private Button btnSaveRecord;	//保存记录
@@ -53,7 +50,7 @@ public class NewRecordActivity extends BaseFragmentActivity implements OnClickLi
 	private View backUp;	
 	private PopupWindow mPopWindow;
 	private View vMore;
-	TagFragment mTagFragment;
+	TagDialogFragment mTagFragment;
 	
 	private long recordId=-1;
 	private final int BACK_TAKE_PHOTO =1;
@@ -201,10 +198,9 @@ public class NewRecordActivity extends BaseFragmentActivity implements OnClickLi
 	 * 修改Tag
 	 */
 	private void modifyTag(){
-		mTagFragment = new TagFragment(null,okListener);
+		mTagFragment = new TagDialogFragment(null,okListener);
 		mTagFragment.show(getSupportFragmentManager(), "tag");
-        String tags = TagData.getTags(mContext,String.valueOf(recordId));
-        mTagFragment.setmIDialog(new TagFragment.IDialog() {
+        mTagFragment.setmIDialog(new TagDialogFragment.IDialog() {
             @Override
             public void onShowConetent() {
                 String tags = TagData.getTags(mContext,String.valueOf(recordId));
@@ -297,13 +293,13 @@ public class NewRecordActivity extends BaseFragmentActivity implements OnClickLi
 		@Override
 		public void onClick(View v) {
 			if(mPopWindow==null){
-				View content = mInflater.inflate(R.layout.new_record_pop_more,null);
+				ViewGroup content = (ViewGroup) mInflater.inflate(R.layout.new_record_pop_more,null);
 				View actionTakePhoto = content.findViewById(R.id.popactionTakePhoto);
 				View actionTag = content.findViewById(R.id.popActionTag);
 				
 				actionTakePhoto.setOnClickListener(listItemListener);
 				actionTag.setOnClickListener(listItemListener);
-				mPopWindow = new PopupWindow(content,200,200);
+				mPopWindow = new PopupWindow(content,ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
 			}
 			
 			if(mPopWindow.isShowing()){

@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cn.bitlove.babylive"
     android:versionCode="1"
-    android:versionName="1.0">
+    android:versionName="0.5">
 
     <uses-sdk
         android:minSdkVersion="11"
@@ -19,6 +19,7 @@
         <activity   android:name=".activity.WelcomeActivity" />
         <activity android:name=".activity.ProfileActivity"/>
         <activity android:name=".activity.NewRecordActivity"/>
+        <activity android:name=".activity.TagRecordsActivity"></activity>
         <activity android:name=".activity.MainFragmentActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

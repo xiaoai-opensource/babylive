@@ -16,6 +16,7 @@ import cn.bitlove.babylive.R;
 import cn.bitlove.babylive.fragment.ConfigFragment;
 import cn.bitlove.babylive.fragment.ProfileFragment;
 import cn.bitlove.babylive.fragment.RecordListFragment;
+import cn.bitlove.babylive.fragment.TagsFragment;
 import cn.bitlove.babylive.fragment.TimeLineFragment;
 import cn.bitlove.remind.ToastReminder;
 
@@ -59,7 +60,7 @@ public class MainFragmentActivity extends BaseFragmentActivity implements OnClic
 
         recordFragment = new RecordListFragment();
         categoryFrament = new TimeLineFragment();
-        tagFragment = new ProfileFragment();
+        tagFragment = new TagsFragment();
         configFragment = new ConfigFragment();
         
         switchFragment(recordFragment);

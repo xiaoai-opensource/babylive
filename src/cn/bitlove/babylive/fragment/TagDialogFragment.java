@@ -7,29 +7,26 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
-
 import cn.bitlove.babylive.R;
-import cn.bitlove.babylive.data.TagData;
 
 /**
  * 标签输入
  *
  * @author luoaz
  */
-public class TagFragment extends DialogFragment {
+public class TagDialogFragment extends DialogFragment {
 
     private OnClickListener mCancelListener;
     private OnClickListener mOKListener;
     private IDialog mIDialog;
     private EditText etTags;
 
-    public TagFragment() {
+    public TagDialogFragment() {
     }
-    public TagFragment(OnClickListener cancelListener, OnClickListener okListener) {
+    public TagDialogFragment(OnClickListener cancelListener, OnClickListener okListener) {
         if (cancelListener == null) {
             mCancelListener = new OnClickListener() {
                 @Override
@@ -54,7 +51,7 @@ public class TagFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View content = inflater.inflate(R.layout.fragment_tag, null);
+        View content = inflater.inflate(R.layout.fragment_dialog_tag, null);
         etTags = (EditText) content.findViewById(R.id.etTags);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(content)
@@ -62,7 +59,6 @@ public class TagFragment extends DialogFragment {
                 .setPositiveButton(R.string.ok, mOKListener)
                 .setNegativeButton(R.string.cancel, mCancelListener);
 
-        Log.i("tag", "into onCreate");
         return builder.create();
     }
 
@@ -88,7 +84,6 @@ public class TagFragment extends DialogFragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        Log.i("tag","onAttach   " + (etTags==null));
     }
 
     public void setmIDialog(IDialog iDialog) {

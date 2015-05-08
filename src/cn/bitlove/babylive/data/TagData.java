@@ -1,11 +1,14 @@
 package cn.bitlove.babylive.data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.Context;
 import android.database.Cursor;
-
 import cn.bitlove.babylive.database.SQLiteManager;
 import cn.bitlove.babylive.database.TagTB;
 import cn.bitlove.babylive.entity.Tag;
+import cn.bitlove.babylive.entity.TagCate;
 
 
 /**
@@ -38,7 +41,6 @@ public class TagData {
 
     /**
      * 根据Recordid查找所有的tag
-     *
      * @param recordId
      * @return
      */
@@ -67,5 +69,39 @@ public class TagData {
             }
         }
         return sb.toString();
+    }
+    
+    /**
+     * 统计tag使用情况
+     * @return
+     */
+    public static List<TagCate> totalTagCate(Context context){
+    	List<TagCate> tags = new ArrayList<TagCate>();
+    	SQLiteManager sqlManager = SQLiteManager.getInstance(context.getApplicationContext());
+    	Cursor cursor = null;
+    	cursor = sqlManager.totalTagCate();
+    	if(cursor!=null){
+    		try{
+    			cursor.moveToFirst();
+    			while(cursor!=null){
+    				TagCate tc = new TagCate();
+    				tc.tagName = cursor.getString(0);
+    				tc.tagCount = cursor.getInt(1);
+    				
+    				tags.add(tc);
+    				cursor.moveToNext();
+    			}
+    			
+    		}catch(Exception ex){
+    			ex.printStackTrace();
+    		}finally{
+    			if(cursor!=null){
+    				cursor.close();
+    				cursor = null;
+    			}
+    		}
+    	}
+    	return tags;
+    	
     }
 }
