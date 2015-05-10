@@ -7,6 +7,7 @@ import cn.bitlove.babylive.activity.NewRecordActivity;
 import cn.bitlove.babylive.data.RecordData;
 import cn.bitlove.babylive.entity.Record;
 import cn.bitlove.babylive.util.ManageActivity;
+import cn.bitlove.babylive.widget.SlideItemTouchuListener;
 import cn.bitlove.babylive.widget.WaterfallListView;
 import cn.bitlove.babylive.widget.WaterfallListView.IOnRefresh;
 import cn.bitlove.remind.ToastReminder;
@@ -17,7 +18,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
@@ -128,6 +131,9 @@ public class RecordListFragment extends Fragment{
 				mActivity.startActivity(intent);
 			}
 		});
+		
+		SlideItemTouchuListener sListener = new SlideItemTouchuListener(recordList,R.id.rlContent,R.id.del);
+		recordList.setOnTouchListener(sListener);
 
 	}
 	IOnRefresh refresher = new IOnRefresh() {

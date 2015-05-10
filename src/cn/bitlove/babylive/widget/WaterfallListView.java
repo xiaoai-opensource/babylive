@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -36,6 +37,7 @@ public class WaterfallListView extends ListView implements OnScrollListener {
 		super(context, attrs);
 		init();
 	}
+	
 	@Override
 	public void onScrollStateChanged(AbsListView view, int scrollState) {
 		mScrollState = scrollState;
