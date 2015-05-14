@@ -1,5 +1,6 @@
 package cn.bitlove.babylive.activity;
 
+import java.io.File;
 import java.util.Calendar;
 
 import android.app.DatePickerDialog.OnDateSetListener;
@@ -24,7 +25,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 import cn.bitlove.babylive.R;
-import cn.bitlove.babylive.SeflConstants;
+import cn.bitlove.babylive.SelfConstants;
 import cn.bitlove.babylive.data.RecordData;
 import cn.bitlove.babylive.data.RecordMetaData;
 import cn.bitlove.babylive.data.TagData;
@@ -33,6 +34,7 @@ import cn.bitlove.babylive.entity.Tag;
 import cn.bitlove.babylive.fragment.TagDialogFragment;
 import cn.bitlove.babylive.util.DateTimeManager;
 import cn.bitlove.babylive.util.FileUtil;
+import cn.bitlove.babylive.util.PropertyUtil;
 import cn.bitlove.babylive.util.RecordMetaUtil;
 import cn.bitlove.babylive.util.Util;
 import cn.bitlove.remind.ToastReminder;
@@ -103,7 +105,7 @@ public class NewRecordActivity extends BaseFragmentActivity implements OnClickLi
 			recordId=mRecord.getId();
 		}else{
 			Calendar calendar = Calendar.getInstance();
-			String createDate = DateFormat.format(SeflConstants.DB_DATE_FORMAT, calendar).toString();
+			String createDate = DateFormat.format(SelfConstants.DB_DATE_FORMAT, calendar).toString();
 			etDate.setText(createDate);
 		}
 	}
@@ -119,7 +121,7 @@ public class NewRecordActivity extends BaseFragmentActivity implements OnClickLi
 		String strTitle = "".equals(etTitle.getText().toString())?"无标题":etTitle.getText().toString();
 		mRecord.setTitle(strTitle);
 		Calendar calendar = Calendar.getInstance();
-		String createDate = DateFormat.format(SeflConstants.DB_DATE_FORMAT, calendar).toString();
+		String createDate = DateFormat.format(SelfConstants.DB_DATE_FORMAT, calendar).toString();
 		mRecord.setCreateDate(createDate);
 		mRecord.setUserName("");
 		RecordData rd = RecordData.getInstance(mContext);
@@ -128,6 +130,7 @@ public class NewRecordActivity extends BaseFragmentActivity implements OnClickLi
 			long rowId = rd.updateRecord(mRecord);
 			if(rowId>0){
 				ToastReminder.showToast(mContext, "更新成功", Toast.LENGTH_LONG);
+				sendDataChangedBroadcast();
 				return true;
 			}else{
 				ToastReminder.showToast(mContext, "更新失败", Toast.LENGTH_LONG);
@@ -137,6 +140,7 @@ public class NewRecordActivity extends BaseFragmentActivity implements OnClickLi
 			recordId = rd.saveRecord(mRecord);
 			if(recordId>0){
 				ToastReminder.showToast(mContext, "保存成功", Toast.LENGTH_LONG);
+				sendDataChangedBroadcast();
 				return true;
 			}else{
 				ToastReminder.showToast(mContext, "保存失败", Toast.LENGTH_LONG);
@@ -155,7 +159,7 @@ public class NewRecordActivity extends BaseFragmentActivity implements OnClickLi
 					int dayOfMonth) {
 				Calendar calendar = Calendar.getInstance();
 				calendar.set(year, monthOfYear+1, dayOfMonth);
-				String date = (String) DateFormat.format(SeflConstants.DB_DATE_FORMAT, calendar);
+				String date = (String) DateFormat.format(SelfConstants.DB_DATE_FORMAT, calendar);
 				etDate.setText(date);
 			}
 		});
@@ -172,13 +176,10 @@ public class NewRecordActivity extends BaseFragmentActivity implements OnClickLi
 	/**
 	 * 设置照相机返回内容
 	 * */
-	private void setPhoto(Intent data){
-
-		Uri uri = data.getData(); 
-		String sdPath = FileUtil.saveFileBitMapToSDcard(uri.getPath(), _imgName);
+	private void setPhoto(String imgPath){
 
 		int etWidthDp = etContent.getWidth() - etContent.getPaddingLeft() - etContent.getPaddingRight();
-		Bitmap thumbnailBM = FileUtil.saveFileThumbnailImgToSDcard(mContext,sdPath,etWidthDp, _imgName);
+		Bitmap thumbnailBM = FileUtil.saveFileThumbnailImgToSDcard(mContext,imgPath +File.separator+_imgName,etWidthDp, _imgName);
 		ImageSpan is = new ImageSpan(mContext,thumbnailBM,ImageSpan.ALIGN_BASELINE);
 
 		RecordMetaData rmd = RecordMetaData.getInstance(mContext);
@@ -235,6 +236,12 @@ public class NewRecordActivity extends BaseFragmentActivity implements OnClickLi
 		
 		return result;
 	}
+	//发送数据信息更改广播
+	private void sendDataChangedBroadcast(){
+		Intent intent = new Intent();
+		intent.setAction(SelfConstants.BROADCAST_RECORD_DATA_CHANGED);
+		mContext.sendBroadcast(intent);
+	}
 	DialogInterface.OnClickListener okListener = new DialogInterface.OnClickListener(){
 		@Override
 		public void onClick(DialogInterface dialog, int which) {
@@ -275,8 +282,15 @@ public class NewRecordActivity extends BaseFragmentActivity implements OnClickLi
 		}
 		
 		switch (requestCode) {
-		case BACK_TAKE_PHOTO:			
-			setPhoto(data);
+		case BACK_TAKE_PHOTO:
+			if(data == null){
+				String tempDir = PropertyUtil.getProperty("sd_temp");
+				setPhoto(tempDir);
+			}else{
+				Uri uri = data.getData();
+				String path = uri.getPath();
+				setPhoto(path);
+			}
 			break;
 
 		default:

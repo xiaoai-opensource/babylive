@@ -6,12 +6,10 @@ import java.util.regex.Pattern;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
 import android.widget.TextView;
-import cn.bitlove.babylive.R;
 public class RecordMetaUtil {
 
 	final public static int DEFAULT_SIZE = -1;

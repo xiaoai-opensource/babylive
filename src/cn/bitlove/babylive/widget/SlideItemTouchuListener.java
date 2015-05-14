@@ -12,6 +12,8 @@ import android.widget.ListView;
  */
 public class SlideItemTouchuListener implements View.OnTouchListener {
 
+	//最小滑动距离
+	private static final int MIN_SLIDE_PX = 10;
 	//操作对象
 	private ListView mListView;
 	//item左侧内容ID
@@ -20,12 +22,16 @@ public class SlideItemTouchuListener implements View.OnTouchListener {
 	private int itemRightId;
 	//上一次事件的X值
 	private float lastX=0;
+	//上一次事件的Y值
+	private float lastY=0;
 	//Item右侧隐藏内容宽度
 	private int itemRightWidth;
 	//上次滑动后的TranslationX值
 	private float lastActionTranslationX;
 	//操作的item
 	private View itemView;
+	//正在滑动的item
+	private View slidingItem;
 	//Item右侧隐藏区域
 	private View itemRight;
 	//Item 正常显示区域
@@ -45,6 +51,7 @@ public class SlideItemTouchuListener implements View.OnTouchListener {
 		switch (ev.getAction()) {
 		case MotionEvent.ACTION_DOWN:
 			lastX = ev.getX();
+			lastY = ev.getY();
 			itemView = findViewByAction(ev);
 			if(itemView==null){
 				return false;
@@ -55,8 +62,11 @@ public class SlideItemTouchuListener implements View.OnTouchListener {
 			lastActionTranslationX = itemRight.getTranslationX();
 			break;
 		case MotionEvent.ACTION_MOVE:
-			isDoSlide = true;
+
 			if(isRightItemCanSlide(ev)){
+				isDoSlide = true;
+				slidingItem = itemView;
+				
 				itemRight.setTranslationX(lastActionTranslationX+getDif(ev));
 				itemLeft.setTranslationX(lastActionTranslationX+getDif(ev));
 			}
@@ -68,17 +78,15 @@ public class SlideItemTouchuListener implements View.OnTouchListener {
 				me.setAction(MotionEvent.ACTION_CANCEL);
 				mListView.onTouchEvent(me);
 
-				doLastSlide(ev);
-			}else{
-				return false;
+				doLastSlide(ev,true);
 			}
-			
+			System.out.println("isDoslide 2 : " + isDoSlide);
 		default:
 			break;
 		}
 
 
-		return true;
+		return false;
 	}
 	//根据事件位置，查找item
 	private View findViewByAction(MotionEvent ev){
@@ -88,9 +96,14 @@ public class SlideItemTouchuListener implements View.OnTouchListener {
 			if(child.getTop()<y && child.getBottom()>y){
 				return child;
 			}
-			
+
 		}
 		return null;
+	}
+	//List 是否上下滑动
+	private boolean isSlideVertical(MotionEvent ev){
+
+		return Math.abs(ev.getY()-lastY) > Math.abs(ev.getX()-lastX);
 	}
 	//Item是否向左滑动
 	private boolean isSlideLeft(MotionEvent ev){
@@ -103,35 +116,51 @@ public class SlideItemTouchuListener implements View.OnTouchListener {
 	//是否可以滑动
 	private boolean isRightItemCanSlide( MotionEvent ev){
 		float curDif = getDif(ev);
+		if(Math.abs(curDif)<MIN_SLIDE_PX){
+			return false;
+		}
 		boolean isCanSlideLeft = isSlideLeft(ev) && itemRightWidth > Math.abs(curDif) && itemRightWidth>Math.abs(lastActionTranslationX);
 		boolean isCanSlideRight = !isSlideLeft(ev) && itemRight.getTranslationX()<0;
 		return isCanSlideLeft || isCanSlideRight;
 	}
 	//做剩下的滑动内容
-	private void doLastSlide(MotionEvent ev){
+	private void doLastSlide(MotionEvent ev,boolean isNormal){
 		Interpolator interpolator = AnimationUtils.loadInterpolator(mListView.getContext()
 				, android.R.anim.accelerate_interpolator);
-		if(Math.abs(itemRight.getTranslationX()*2) >= itemRightWidth){
-			ObjectAnimator animator = ObjectAnimator.ofFloat(itemLeft, "translationX", -itemRightWidth).setDuration(animDuration);
-			animator.setInterpolator(interpolator);
-			
-			ObjectAnimator animator2 = ObjectAnimator.ofFloat(itemRight, "translationX", -itemRightWidth).setDuration(animDuration);
-			animator2.setInterpolator(interpolator);
-			
-			animator.start();
-			animator2.start();
-			
+		
+		if(slidingItem == null){
+			slidingItem = itemView;
+		}
+		View right = slidingItem.findViewById(itemRightId);
+		View left = slidingItem.findViewById(itemLeftId);
+				
+		if(Math.abs(right.getTranslationX()*2) >= itemRightWidth){
+			slideLeft(right,left,interpolator);
 		}else{
-			ObjectAnimator animator = ObjectAnimator.ofFloat(itemLeft, "translationX", 0).setDuration(animDuration);
-			animator.setInterpolator(interpolator);
-			
-			ObjectAnimator animator2 = ObjectAnimator.ofFloat(itemRight, "translationX",0).setDuration(animDuration);
-			animator2.setInterpolator(interpolator);
-			
-			animator.start();
-			animator2.start();
+			slideRight(right, left, interpolator);
 		}
 	}
+	
+	private void slideRight(View right,View left,Interpolator interpolator ){
+		ObjectAnimator animator = ObjectAnimator.ofFloat(left, "translationX", 0).setDuration(animDuration);
+		animator.setInterpolator(interpolator);
 
+		ObjectAnimator animator2 = ObjectAnimator.ofFloat(right, "translationX",0).setDuration(animDuration);
+		animator2.setInterpolator(interpolator);
+
+		animator.start();
+		animator2.start();
+		isDoSlide = false;
+	}
+	private void slideLeft(View right,View left,Interpolator interpolator ){
+		ObjectAnimator animator = ObjectAnimator.ofFloat(left, "translationX", -itemRightWidth).setDuration(animDuration);
+		animator.setInterpolator(interpolator);
+
+		ObjectAnimator animator2 = ObjectAnimator.ofFloat(right, "translationX", -itemRightWidth).setDuration(animDuration);
+		animator2.setInterpolator(interpolator);
+
+		animator.start();
+		animator2.start();
+	}
 
 }

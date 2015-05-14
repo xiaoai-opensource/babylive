@@ -2,6 +2,21 @@ package cn.bitlove.babylive.fragment;
 
 import java.util.ArrayList;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.BaseAdapter;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 import cn.bitlove.babylive.R;
 import cn.bitlove.babylive.activity.NewRecordActivity;
 import cn.bitlove.babylive.data.RecordData;
@@ -11,23 +26,6 @@ import cn.bitlove.babylive.widget.SlideItemTouchuListener;
 import cn.bitlove.babylive.widget.WaterfallListView;
 import cn.bitlove.babylive.widget.WaterfallListView.IOnRefresh;
 import cn.bitlove.remind.ToastReminder;
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.Handler;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.View.OnTouchListener;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Toast;
 
 public class RecordListFragment extends Fragment{
 	private Context mContext;
@@ -136,6 +134,7 @@ public class RecordListFragment extends Fragment{
 		recordList.setOnTouchListener(sListener);
 
 	}
+	
 	IOnRefresh refresher = new IOnRefresh() {
 
 		@Override

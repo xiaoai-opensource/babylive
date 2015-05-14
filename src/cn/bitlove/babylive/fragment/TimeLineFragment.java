@@ -2,10 +2,13 @@ package cn.bitlove.babylive.fragment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,6 +21,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import cn.bitlove.babylive.R;
+import cn.bitlove.babylive.SelfConstants;
 import cn.bitlove.babylive.activity.NewRecordActivity;
 import cn.bitlove.babylive.data.RecordData;
 import cn.bitlove.babylive.entity.Record;
@@ -43,6 +47,7 @@ public class TimeLineFragment extends Fragment {
 		mView =  inflater.inflate(R.layout.fragment_time_line, container,false);
 		init();
 		initEvt();
+		registBroadcast();
 		return mView;
 	}
 	@Override
@@ -50,8 +55,8 @@ public class TimeLineFragment extends Fragment {
 		super.onCreate(savedInstanceState);
 		mContext = getActivity();
 		mActivity = getActivity();
+		
 		itemArr = initData();
-
 		if(mAdapter==null){
 			mAdapter = new CategoryListAdapter(mContext, itemArr);
 			//恢复保存状态
@@ -62,9 +67,18 @@ public class TimeLineFragment extends Fragment {
 		}
 	}
 	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+	}
+	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		outState.putSerializable("mCatePositions", mAdapter.mCatePositions);
 		super.onSaveInstanceState(outState);
+	}
+	@Override
+	public void onDetach() {
+		super.onDetach();
+		unRegistBroadcast();
 	}
 	/**
 	 * 初始化
@@ -90,6 +104,20 @@ public class TimeLineFragment extends Fragment {
 		return itemArr;
 	}
 	/**
+	 * 刷新数据源，如果想用notifyDatasetChanged方法，必须保证跟Adapter关联的DataSet的引用不能变，比如又重新new一个List
+	 * @return
+	 */
+	private ArrayList<Record> refreshData(){
+		
+		List<Record> list = RecordData.getInstance(mContext).queryAllRecords();
+		itemArr.clear();
+		for (Record record : list) {
+			itemArr.add(record);
+		}
+		return itemArr;
+	}
+	
+	/**
 	 * 初始化时间轴
 	 */
 	public void initTimeLine(){
@@ -109,6 +137,32 @@ public class TimeLineFragment extends Fragment {
 				mActivity.startActivity(intent);
 			}
 		});
+	}
+	
+	/**
+	 * 数据源更改
+	 */
+	BroadcastReceiver mDataChangedReceiver = new BroadcastReceiver(){
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			refreshData();
+			mAdapter.notifyDataSetChanged();
+		}
+		
+	};
+	IntentFilter mDataChangedIntentFilter = new IntentFilter(SelfConstants.BROADCAST_RECORD_DATA_CHANGED);
+	/**
+	 * 注册数据源更改广播
+	 */
+	private void registBroadcast(){
+		mContext.registerReceiver(mDataChangedReceiver, mDataChangedIntentFilter);
+	}
+	/**
+	 * 清除数据源更改广播
+	 */
+	private void unRegistBroadcast(){
+		mContext.unregisterReceiver(mDataChangedReceiver);
 	}
 	
 	/**

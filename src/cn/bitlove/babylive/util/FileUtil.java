@@ -127,7 +127,7 @@ public class FileUtil {
 		FileOutputStream fo = null;
 		Bitmap _tempBM = null;
 		try {
-			fo = new FileOutputStream(imgDir+"/"+newName);
+			fo = new FileOutputStream(imgDir+File.separator+newName);
 			_tempBM = ThumbnailUtils.extractThumbnail(bitmapThumbnail, UnitSwitch.dp2px(context, width)
 					, UnitSwitch.dp2px(context, height));
 			_tempBM.compress(Bitmap.CompressFormat.JPEG, 100, fo);// 把数据写入文件

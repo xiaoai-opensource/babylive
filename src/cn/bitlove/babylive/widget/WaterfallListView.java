@@ -1,17 +1,16 @@
 package cn.bitlove.babylive.widget;
 
-import cn.bitlove.babylive.R;
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.FrameLayout;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.FrameLayout;
 import android.widget.ListView;
+import cn.bitlove.babylive.R;
 
 /**
  * 瀑布流Listview
