@@ -87,6 +87,8 @@ public class RecordListFragment extends Fragment{
 					convertView.setTag(vh);
 				}else{
 					vh = (ViewHolder) convertView.getTag();
+					vh.rlContent.setTranslationX(0);
+					vh.del.setTranslationX(0);
 				}
 				vh.actionTime.setText(record.getActionDate());
 				vh.title.setText(record.getTitle());
@@ -169,7 +171,6 @@ public class RecordListFragment extends Fragment{
 		TextView actionTime;
 		TextView title;
 		RelativeLayout del;
-		int delScrollX;
 	}
 
 }
